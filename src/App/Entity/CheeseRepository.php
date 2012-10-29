@@ -53,6 +53,7 @@ class CheeseRepository extends EntityRepository
 
         return $qb
             ->select('c.milk')
+            ->orderBy('c.milk')
             ->distinct(true)
         ;
     }
@@ -63,6 +64,7 @@ class CheeseRepository extends EntityRepository
 
         return $qb
             ->select('c.region')
+            ->orderBy('c.region')
             ->distinct(true)
         ;
     }
