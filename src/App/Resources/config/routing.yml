@@ -2,10 +2,18 @@ app_homepage:
     pattern:  /
     defaults: { _controller: App:Cheese:index }
 
-app_region:
+index_cheeses:
+    pattern:  /
+    defaults: { _controller: App:Cheese:index }
+
+index_cheeses_milk:
+    pattern:  /milk/{milk}
+    defaults: { _controller: App:Cheese:indexMilk }
+
+index_cheeses_region:
     pattern:  /region/{region}
     defaults: { _controller: App:Cheese:indexRegion }
 
-app_milk:
-    pattern:  /milk/{milk}
-    defaults: { _controller: App:Cheese:indexMilk }
+show_cheese:
+    pattern: /cheeses/{name}
+    defaults: { _controller: App:Cheese:show }

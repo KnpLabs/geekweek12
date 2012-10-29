@@ -25,6 +25,17 @@ class CheeseController extends Controller
         ));
     }
 
+    public function showAction($name)
+    {
+        $cheese = $this->getRepository()->findOneByName($name);
+
+        if (!$cheese) {
+            throw $this->createNotFoundException(sprintf('Couldn\'t find cheese %s', $name));
+        }
+
+        return array('cheese' => $cheese);
+    }
+
     public function listRegionAction()
     {
         return $this->render('App:Cheese:listRegion.html.twig', array(

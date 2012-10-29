@@ -1,0 +1,7 @@
+{% extends 'App::base.html.twig' %}
+
+{% block body %}
+<h1>{{ cheese.name }}</h1>
+<em>Fromage de <a href="#">{{ cheese.milk }}</a> en provenance de <a href="#">{{ cheese.region }}</a></em>
+<p>Evaluation: {{ cheese.score }}</p>
+{% endblock %}
