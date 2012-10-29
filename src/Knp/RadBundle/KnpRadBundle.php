@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Knp\RadBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class App extends Bundle
+class KnpRadBundle extends Bundle
 {
 }

@@ -15,7 +15,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new App\App(),
+            new Knp\RadBundle\KnpRadBundle(),
+            new Knp\RadBundle\AppBundle\Bundle(__DIR__.'/../src/App'),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
