@@ -42,7 +42,12 @@ class ConventionalLoader extends ObjectBehavior
         $new = $routes->get('app_cheeses_new');
         $new->getPattern()->shouldReturn('/cheeses/new');
         $new->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:new'));
-        $new->getRequirements()->shouldReturn(array('_method' => 'GET|POST'));
+        $new->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $new = $routes->get('app_cheeses_create');
+        $new->getPattern()->shouldReturn('/cheeses/');
+        $new->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:new'));
+        $new->getRequirements()->shouldReturn(array('_method' => 'POST'));
 
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/cheeses/{id}');
@@ -52,13 +57,18 @@ class ConventionalLoader extends ObjectBehavior
         $edit = $routes->get('app_cheeses_edit');
         $edit->getPattern()->shouldReturn('/cheeses/{id}/edit');
         $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
-        $edit->getRequirements()->shouldReturn(array('_method' => 'GET|PUT', 'id' => '\\d+'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $edit = $routes->get('app_cheeses_update');
+        $edit->getPattern()->shouldReturn('/cheeses/{id}');
+        $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
 
         $delete = $routes->get('app_cheeses_delete');
         $delete->getPattern()->shouldReturn('/cheeses/{id}');
         $delete->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:delete'));
         $delete->getRequirements()->shouldReturn(array('_method' => 'DELETE', 'id' => '\\d+'));
 
-        $routes->shouldHaveCount(5);
+        $routes->shouldHaveCount(7);
     }
 }
