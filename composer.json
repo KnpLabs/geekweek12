@@ -39,7 +39,7 @@
     },
     "minimum-stability": "dev",
     "config": {
-        "bin-dir": "bing"
+        "bin-dir": "bin"
     },
     "extra": {
         "symfony-app-dir": "app",
