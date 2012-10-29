@@ -41,7 +41,7 @@ class CheeseRepository extends EntityRepository
     {
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
-        $qb
+        return $qb
             ->addSelect('(c.totalRating / c.totalVote) AS rating')
             ->orderBy('rating', 'DESC')
         ;
