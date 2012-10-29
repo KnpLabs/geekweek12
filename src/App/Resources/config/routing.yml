@@ -3,7 +3,7 @@ app_homepage:
     defaults: { _controller: App:Cheese:index }
 
 index_cheeses:
-    pattern:  /
+    pattern:  /cheeses
     defaults: { _controller: App:Cheese:index }
 
 index_cheeses_milk:

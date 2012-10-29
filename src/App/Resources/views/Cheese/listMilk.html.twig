@@ -1,6 +1,6 @@
 <h3>Milks</h3>
 <ul>
     {% for milk in milks %}
-    <li><a href="{{ path('app_milk', { milk: milk.milk }) }}">{{ milk.milk }}</a></li>
+    <li><a href="{{ path('index_cheeses_milk', { milk: milk.milk }) }}">{{ milk.milk }}</a></li>
     {% endfor %}
 </ul>

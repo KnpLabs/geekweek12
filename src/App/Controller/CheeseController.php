@@ -13,16 +13,18 @@ class CheeseController extends Controller
 
     public function indexRegionAction($region)
     {
-        return $this->render('App:Cheese:index.html.twig', array(
-            'cheeses' => $this->getRepository()->findAllByRegion($region, true, 3)
-        ));
+        return array(
+            'cheeses' => $this->getRepository()->findAllByRegion($region, true, 3),
+            'region'  => $region,
+        );
     }
 
     public function indexMilkAction($milk)
     {
-        return $this->render('App:Cheese:index.html.twig', array(
-            'cheeses' => $this->getRepository()->findAllByMilk($milk, true, 3)
-        ));
+        return array(
+            'cheeses' => $this->getRepository()->findAllByMilk($milk, true, 3),
+            'milk'    => $milk,
+        );
     }
 
     public function showAction($name)

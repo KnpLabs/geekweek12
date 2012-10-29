@@ -1,0 +1,20 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Type of milk</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for cheese in cheeses %}
+        <tr>
+            <td><a href="{{ path('show_cheese', {'name': cheese.name }) }}">{{ cheese.name }}</a></td>
+            <td>{{ cheese.region }}</td>
+            <td>{{ cheese.milk }}</td>
+            <td>{{ cheese.score }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
