@@ -93,9 +93,9 @@ class CheeseRepository extends EntityRepository
         ;
     }
 
-    public function findAllByRegion($region, $sorted = false)
+    public function findAllByRegion($region, $sorted = false, $limit = null)
     {
-        $qb = $this->getAllByRegionQueryBuilder($milk);
+        $qb = $this->getAllByRegionQueryBuilder($region);
 
         $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
