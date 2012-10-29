@@ -2,23 +2,24 @@
 
 namespace Context;
 
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
 
 use Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
+    Behat\Behat\Exception\PendingException,
+
+    Behat\Behat\Context\Step;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+use App\Entity\Cheese;
 
-class FeatureContext extends BehatContext //MinkContext if you want to test web
+require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/Assert/Functions.php';
+
+class FeatureContext extends MinkContext
                   implements KernelAwareInterface
 {
     private $kernel;
@@ -35,6 +36,18 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
     }
 
     /**
+     * @BeforeScenario
+     */
+    public function purgeDatabase()
+    {
+        $em = $this->getEntityManager();
+
+        $purger = new ORMPurger($em);
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        $purger->purge();
+    }
+
+    /**
      * Sets HttpKernel instance.
      * This method will be automatically called by Symfony2Extension ContextInitializer.
      *
@@ -46,11 +59,44 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
     }
 
     /**
-     * @Given /^the following products:$/
+     * @Given /^the following (.*)[s]:$/
      */
-    public function theFollowingProducts(TableNode $table)
+    public function theFollowingEntities($entityName, TableNode $table)
     {
-        throw new PendingException();
+        $rows = $table->getRows();
+        foreach ($rows as $i => $row) {
+            if($i > 0){
+                switch ($entityName) {
+                    case 'cheese':
+                            $this->generateCheese($rows[0], $row);
+                        break;
+                    default:
+                        throw new Exception(sprintf('Entity %s unknow !', $entityName));
+                        break;
+                }
+            }
+        }
+    }
+
+    public function generateCheese($headers, $rows)
+    {
+        $em = $this->getEntityManager();
+        $entity = new Cheese();
+        foreach ($rows as $index => $value) {
+            $header = $headers[$index];
+            switch ($header) {
+                case 'rating':
+                    $rating = explode('/', $value);
+                    $entity->setTotalRating($rating[0] * $rating[1]);
+                    $entity->setTotalVote($rating[1]);
+                    break;
+                default:
+                    $entity->{'set'.ucFirst($header)}($value);
+                    break;
+            }
+        }
+        $em->persist($entity);
+        $em->flush();
     }
 
     /**
@@ -58,38 +104,63 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
      */
     public function iAmOnTheHomepage()
     {
-        throw new PendingException();
+        return new Step\Given(sprintf('I am on "%s"', '/'));
     }
 
     /**
-     * @Then /^I should see cheeses Camembert, Ossau-Iraty and Munster$/
+     * @Then /^I should see cheese[s] (.*)$/
      */
-    public function iShouldSeeCheesesCamembertOssauIratyAndMunster()
+    public function iShouldSeeCheeses($cheeses)
     {
-        throw new PendingException();
+        $cheeses = $this->listToArray($cheeses);
+
+        $rows = $this->getSession()->getPage()->findAll('css', 'table tbody tr');
+    
+        $values = array();
+        foreach ($rows as $row) {
+            $cols = $row->findAll('css', 'td a');
+            $values[]  = $cols[0]->getText();
+        }
+
+        sort($cheeses);
+        sort($values);
+
+        assertEquals($cheeses, $values, sprintf(
+            'Expecting to see cheeses %s, actually saw %s',
+            join(', ', $cheeses),
+            join(', ', $values)
+        ));
+
     }
 
     /**
      * @When /^I follow the "([^"]*)" link from the menu$/
      */
-    public function iFollowTheLinkFromTheMenu($arg1)
+    public function iFollowTheLinkFromTheMenu($link)
     {
-        throw new PendingException();
+        return new Step\Given(sprintf('I follow "%s"', $link));
     }
 
-    /**
-     * @Then /^I should see cheeses Maroilles and Munster$/
-     */
-    public function iShouldSeeCheesesMaroillesAndMunster()
+    private function listToArray($list)
     {
-        throw new PendingException();
+        $list  = str_replace(' and ', ', ', $list);
+        $parts = explode(', ', $list);
+
+        return array_map('trim', $parts);
     }
 
-    /**
-     * @Then /^I should see cheeses Ossau-Iraty and Roquefort$/
-     */
-    public function iShouldSeeCheesesOssauIratyAndRoquefort()
+    private function getEntityManager()
     {
-        throw new PendingException();
+        return $this->getDoctrine()->getEntityManager();
+    }
+
+    private function getDoctrine()
+    {
+        return $this->getContainer()->get('doctrine');
+    }
+
+    private function getContainer()
+    {
+        return $this->kernel->getContainer();
     }
 }
