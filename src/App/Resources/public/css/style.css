@@ -1,3 +1,7 @@
+.table-hover tr{
+    cursor: pointer;
+}
+
 .rating {
     unicode-bidi: bidi-override;
     direction: rtl;

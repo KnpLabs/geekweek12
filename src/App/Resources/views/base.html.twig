@@ -26,5 +26,9 @@
                 </div>
             </div>
         </div>
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('bundles/app/js/jquery.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

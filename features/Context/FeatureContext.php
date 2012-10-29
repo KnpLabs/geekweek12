@@ -118,7 +118,7 @@ class FeatureContext extends MinkContext
     
         $values = array();
         foreach ($rows as $row) {
-            $cols = $row->findAll('css', 'td a');
+            $cols = $row->findAll('css', 'td');
             $values[]  = $cols[0]->getText();
         }
 
