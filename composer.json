@@ -22,7 +22,7 @@
         "behat/symfony2-extension": "*",
         "behat/mink-extension": "*",
         "behat/mink-browserkit-driver": "*",
-        "phpspec/phpspec": "*"
+        "phpspec/phpspec2": "*"
     },
     "scripts": {
         "post-install-cmd": [

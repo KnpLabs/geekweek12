@@ -1,5 +1,5 @@
 {
-    "hash": "38657c32128bf35930cb152bdf241f48",
+    "hash": "362d6bb565537f55937c2af9d7052b27",
     "packages": [
         {
             "name": "doctrine/common",
@@ -87,7 +87,6 @@
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "1350901469",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -109,7 +108,8 @@
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
                 "database"
-            ]
+            ],
+            "time": "1350901469"
         },
         {
             "name": "doctrine/dbal",
@@ -263,7 +263,6 @@
                 "doctrine/doctrine-bundle": "1.0.*",
                 "symfony/doctrine-bridge": ">=2.1.0,<2.3-dev"
             },
-            "time": "1350914272",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -293,7 +292,8 @@
             "keywords": [
                 "persistence",
                 "Fixture"
-            ]
+            ],
+            "time": "1350914272"
         },
         {
             "name": "doctrine/orm",
@@ -1372,90 +1372,89 @@
             ]
         },
         {
-            "name": "phpspec/phpspec",
+            "name": "phpspec/php-diff",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpspec/phpspec",
-                "reference": "cb54c94f89a5e1f4098363e19ccfe624b3e5346f"
+                "url": "https://github.com/phpspec/php-diff.git",
+                "reference": "7efe41e227eae44f3ad443905957f9081cf05e3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/phpspec/phpspec/zipball/cb54c94f89a5e1f4098363e19ccfe624b3e5346f",
-                "reference": "cb54c94f89a5e1f4098363e19ccfe624b3e5346f",
+                "url": "https://github.com/phpspec/php-diff/zipball/7efe41e227eae44f3ad443905957f9081cf05e3b",
+                "reference": "7efe41e227eae44f3ad443905957f9081cf05e3b",
+                "shasum": ""
+            },
+            "time": "1348700435",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Diff": "lib/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Chris Boulton"
+                }
+            ],
+            "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays)."
+        },
+        {
+            "name": "phpspec/phpspec2",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpspec/phpspec2.git",
+                "reference": "v1.0.0alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/phpspec/phpspec2/zipball/v1.0.0alpha2",
+                "reference": "v1.0.0alpha2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
+                "php": ">=5.3.1",
                 "mockery/mockery": "0.7.*",
-                "sebastianbergmann/php-text-template": "1.1.1"
+                "symfony/console": ">=2.1.0,<2.2.0",
+                "symfony/event-dispatcher": ">=2.1.0,<2.2.0",
+                "symfony/finder": ">=2.1.0,<2.2.0",
+                "phpspec/php-diff": "*@dev"
             },
+            "time": "1349718360",
             "bin": [
-                "scripts/phpspec.php"
+                "bin/phpspec"
             ],
             "type": "library",
             "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "PHPSpec": "src/"
+                    "PHPSpec2": "src/"
                 }
             },
             "license": [
-                "LGPL"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "PHPSpec Team",
-                    "homepage": "https://github.com/phpspec/phpspec/contributors"
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                },
+                {
+                    "name": "Marcello Duarte",
+                    "homepage": "http://marcelloduarte.net/"
                 }
             ],
-            "description": "PHPSpec: The BDD Specification Library",
-            "homepage": "http://phpspec.net",
+            "description": "Specification-oriented BDD framework for PHP 5.4",
+            "homepage": "http://phpspec.net/",
             "keywords": [
                 "BDD",
-                "test",
-                "spec"
-            ],
-            "time": "1349273228"
-        },
-        {
-            "name": "sebastianbergmann/php-text-template",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarcelloDuarte/php-text-template",
-                "reference": "1.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/MarcelloDuarte/php-text-template/zipball/1.1.1",
-                "reference": "1.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.7"
-            },
-            "time": "2012-08-01 08:45:04",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-0": {
-                    "Text": ""
-                }
-            },
-            "license": [
-                "The BSD 3-Clause License"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "homepage": "http://sebastian-bergmann.de/"
-                }
-            ],
-            "description": "Text_Template: Simple template engine",
-            "homepage": "https://github.com/sebastianbergmann/php-text-template",
-            "keywords": [
-                "template"
+                "TDD",
+                "spec",
+                "SpecBDD",
+                "specification"
             ]
         }
     ],
