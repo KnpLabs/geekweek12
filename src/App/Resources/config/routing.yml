@@ -17,3 +17,7 @@ index_cheeses_region:
 show_cheese:
     pattern: /cheeses/{name}
     defaults: { _controller: App:Cheese:show }
+
+rate_cheese:
+    pattern: /cheese/{name}/rate/{score}
+    defaults: { _controller: App:Cheese:rate }

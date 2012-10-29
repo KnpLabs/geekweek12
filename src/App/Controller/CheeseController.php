@@ -29,13 +29,18 @@ class CheeseController extends Controller
 
     public function showAction($name)
     {
-        $cheese = $this->getRepository()->findOneByName($name);
-
-        if (!$cheese) {
-            throw $this->createNotFoundException(sprintf('Couldn\'t find cheese %s', $name));
-        }
+        $cheese = $this->findOneCheeseOr404($name);
 
         return array('cheese' => $cheese);
+    }
+
+    public function rateAction($name, $score)
+    {
+        $cheese = $this->findOneCheeseOr404($name);
+        $cheese->rate($score);
+        $this->getEntityManager()->flush();
+
+        return $this->redirect($this->generateUrl('show_cheese', array('name' => $name)));
     }
 
     public function listRegionAction()
@@ -54,6 +59,22 @@ class CheeseController extends Controller
 
     private function getRepository()
     {
-        return $this->getDoctrine()->getEntityManager()->getRepository('App\Entity\Cheese');
+        return $this->getEntityManager()->getRepository('App\Entity\Cheese');
+    }
+
+    private function getEntityManager()
+    {
+        return $this->getDoctrine()->getEntityManager();
+    }
+
+    private function findOneCheeseOr404($name)
+    {
+        $cheese = $this->getRepository()->findOneByName($name);
+
+        if (!$cheese) {
+            throw $this->createNotFoundException(sprintf('Couldn\'t find cheese %s', $name));
+        }
+
+        return $cheese;
     }
 }
