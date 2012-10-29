@@ -13,11 +13,10 @@ class CheeseRepository extends EntityRepository
         return $this
             ->createQueryBuilder('c')
             ->select('c')
-            ->distinct(true)
         ;
     }
 
-    private function getAllWhereRegionQueryBuilder($region, QueryBuilder $qb = null)
+    private function getAllByRegionQueryBuilder($region, QueryBuilder $qb = null)
     {
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
@@ -28,7 +27,7 @@ class CheeseRepository extends EntityRepository
     }
 
 
-    private function getAllWhereMilkQueryBuilder($milk, QueryBuilder $qb = null)
+    private function getAllByMilkQueryBuilder($milk, QueryBuilder $qb = null)
     {
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
@@ -38,13 +37,13 @@ class CheeseRepository extends EntityRepository
         ;
     }
 
-    public function getAllOrderByRating(QueryBuilder $qb = null)
+    private function getAllOrderByRating(QueryBuilder $qb = null)
     {
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
         $qb
             ->addSelect('(c.totalRating / c.totalVote) AS rating')
-            ->orderBy('rating')
+            ->orderBy('rating', 'DESC')
         ;
     }
 
@@ -63,7 +62,7 @@ class CheeseRepository extends EntityRepository
 
     public function findAllByMilk($milk, $sorted = false, $limit = null)
     {
-        $qb = $this->getAllWhereMilkQueryBuilder($milk);
+        $qb = $this->getAllByMilkQueryBuilder($milk);
 
         $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
@@ -76,7 +75,7 @@ class CheeseRepository extends EntityRepository
 
     public function findAllByRegion($region, $sorted = false)
     {
-        $qb = $this->getAllWhereRegionQueryBuilder($milk);
+        $qb = $this->getAllByRegionQueryBuilder($milk);
 
         $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
@@ -87,4 +86,33 @@ class CheeseRepository extends EntityRepository
         ;
     }
 
+    public function findRegions()
+    {
+        $qb = $this->getAllQueryBuilder();
+
+        $qb
+            ->select('c.region')
+            ->distinct(true)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findMilks()
+    {
+        $qb = $this->getAllQueryBuilder();
+
+        $qb
+            ->select('c.milk')
+            ->distinct(true)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
