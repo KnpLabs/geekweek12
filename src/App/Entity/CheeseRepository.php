@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use octrine\ORM\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 class CheeseRepository extends EntityRepository
 {
