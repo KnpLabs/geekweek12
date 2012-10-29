@@ -44,4 +44,52 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
     {
         $this->kernel = $kernel;
     }
+
+    /**
+     * @Given /^the following products:$/
+     */
+    public function theFollowingProducts(TableNode $table)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I am on the homepage$/
+     */
+    public function iAmOnTheHomepage()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I should see cheeses Camembert, Ossau-Iraty and Munster$/
+     */
+    public function iShouldSeeCheesesCamembertOssauIratyAndMunster()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I follow the "([^"]*)" link from the menu$/
+     */
+    public function iFollowTheLinkFromTheMenu($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I should see cheeses Maroilles and Munster$/
+     */
+    public function iShouldSeeCheesesMaroillesAndMunster()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I should see cheeses Ossau-Iraty and Roquefort$/
+     */
+    public function iShouldSeeCheesesOssauIratyAndRoquefort()
+    {
+        throw new PendingException();
+    }
 }
