@@ -21,8 +21,8 @@ class CheeseRepository extends EntityRepository
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
         return $qb
-            ->addWhere('UCASE(c.region = :whereRegion')
-            ->setParameter('whereRegion', strtoupper($region))
+            ->andWhere('c.region = :whereRegion')
+            ->setParameter('whereRegion', $region)
         ;
     }
 
@@ -32,8 +32,8 @@ class CheeseRepository extends EntityRepository
         $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
 
         return $qb
-            ->addWhere('UCASE(c.milk = :whereMilk')
-            ->setParameter('whereMilk', strtoupper($milk))
+            ->andWhere('c.milk = :whereMilk')
+            ->setParameter('whereMilk', $milk)
         ;
     }
 
