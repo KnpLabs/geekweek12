@@ -118,4 +118,39 @@ class ConventionalLoader extends ObjectBehavior
 
         $routes->shouldHaveCount(7);
     }
+
+    function it_should_load_collections_with_specified_actions($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'      => '/custom/prefix',
+                'resources'   => array('show', 'bam'),
+                'collections' => array('index', 'paf'),
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $index = $routes->get('app_cheeses_paf');
+        $index->getPattern()->shouldReturn('/custom/prefix/paf');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/{id}');
+        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $show = $routes->get('app_cheeses_bam');
+        $show->getPattern()->shouldReturn('/custom/prefix/{id}/bam');
+        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $routes->shouldHaveCount(4);
+    }
 }
