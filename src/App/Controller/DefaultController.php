@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Knp\RadBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
