@@ -1,0 +1,24 @@
+{% extends 'App::base.html.twig' %}
+
+{% block body %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Type of milk</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for cheese in cheeses %}
+        <tr>
+            <td>{{ cheese.name }}</td>
+            <td>{{ cheese.region }}</td>
+            <td>{{ cheese.milk }}</td>
+            <td>{{ cheese.score }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
