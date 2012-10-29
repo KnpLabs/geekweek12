@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Knp\RadBundle\KnpRadBundle(),
-            new Knp\RadBundle\AppBundle\Bundle(__DIR__.'/../src/App'),
+            new App\App(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
