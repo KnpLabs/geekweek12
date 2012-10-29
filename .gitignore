@@ -1,6 +1,8 @@
 app/*\.cache
 vendor/*
 web/bundles/*
+web/css/*
+web/js/*
 app/cache/*
 app/logs/*
 bin/*

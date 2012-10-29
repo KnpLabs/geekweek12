@@ -1,4 +1,20 @@
 {% extends '::base.html.twig' %}
 
-dood
+{% block stylesheets %}
+    {% stylesheets
+        'bundles/app/css/bootstrap.css'
+        'bundles/app/css/bootstrap-responsive.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+        'bundles/app/js/jquery.js'
+        'bundles/app/js/bootstrap.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
