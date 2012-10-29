@@ -2,7 +2,7 @@
     "name": "knplabs/symfony-rad-edition",
     "description": "The \"KnpLabs Rad Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "": "src/", "Context": "features/" }
     },
     "require": {
         "php": ">=5.3.3",
@@ -38,6 +38,9 @@
         ]
     },
     "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bing"
+    },
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
