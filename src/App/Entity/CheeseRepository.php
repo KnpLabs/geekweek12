@@ -47,6 +47,26 @@ class CheeseRepository extends EntityRepository
         ;
     }
 
+    private function getDistinctMilkQueryBuilder(QueryBuilder $qb = null)
+    {
+        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+
+        return $qb
+            ->select('c.milk')
+            ->distinct(true)
+        ;
+    }
+
+    private function getDistinctRegionQueryBuilder(QueryBuilder $qb = null)
+    {
+        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+
+        return $qb
+            ->select('c.region')
+            ->distinct(true)
+        ;
+    }
+
     public function findAll($sorted = false, $limit = null)
     {
         $qb = $this->getAllQueryBuilder();
@@ -88,14 +108,8 @@ class CheeseRepository extends EntityRepository
 
     public function findRegions()
     {
-        $qb = $this->getAllQueryBuilder();
-
-        $qb
-            ->select('c.region')
-            ->distinct(true)
-        ;
-
-        return $qb
+        return $this
+            ->getDistinctRegionQueryBuilder()
             ->getQuery()
             ->getResult()
         ;
@@ -103,14 +117,8 @@ class CheeseRepository extends EntityRepository
 
     public function findMilks()
     {
-        $qb = $this->getAllQueryBuilder();
-
-        $qb
-            ->select('c.milk')
-            ->distinct(true)
-        ;
-
-        return $qb
+        return $this
+            ->getDistinctMilkQueryBuilder()
             ->getQuery()
             ->getResult()
         ;
