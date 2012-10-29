@@ -43,7 +43,7 @@ class Cheese
 
     public function getScore()
     {
-        return $totalRating / $totalVote;
+        return $this->totalRating / $this->totalVote;
     }
 
     public function getId()
