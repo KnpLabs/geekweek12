@@ -5,12 +5,15 @@ namespace App\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Cheese;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class LoadCheeseData implements FixtureInterface
 {
 
     public function load(ObjectManager $manager)
     {
+
         $cheese = new Cheese();
         $cheese->setName('Camembert');
         $cheese->setRegion('Normandie');
@@ -19,6 +22,8 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
+        $manager->flush();
+        $this->moveAsset($cheese);
 
         $cheese = new Cheese();
         $cheese->setName('Gruyère');
@@ -28,6 +33,8 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
+        $manager->flush();
+        $this->moveAsset($cheese);
 
         $cheese = new Cheese();
         $cheese->setName('Maroilles');
@@ -37,6 +44,8 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
+        $manager->flush();
+        $this->moveAsset($cheese);
 
         $cheese = new Cheese();
         $cheese->setName('Munster');
@@ -46,6 +55,8 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
+        $manager->flush();
+        $this->moveAsset($cheese);
 
         $cheese = new Cheese();
         $cheese->setName('Ossau-Iraty');
@@ -55,6 +66,8 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
+        $manager->flush();
+        $this->moveAsset($cheese);
 
         $cheese = new Cheese();
         $cheese->setName('Roquefort');
@@ -64,7 +77,25 @@ class LoadCheeseData implements FixtureInterface
         $cheese->setTotalVote(12);
 
         $manager->persist($cheese);
-
         $manager->flush();
+        $this->moveAsset($cheese);
+
+    }
+
+    private function moveAsset(Cheese $cheese)
+    {
+        $fs = new Filesystem();
+
+        $source = sprintf('%s/../Resources/%s.jpg', dirname(__FILE__), strtolower($cheese->getName()));
+        $target = sprintf('%s/../../Resources/public/img/cheeses/%s.jpg', dirname(__FILE__), $cheese->getId());
+
+        if($fs->exists($source)){
+            $fs->copy($source, $target, true);
+            return;
+        }
+
+        throw new \Exception(sprintf("File '%s' doesn't exists.", $source));
+        
+
     }
 }

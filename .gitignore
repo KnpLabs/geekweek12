@@ -7,3 +7,4 @@ app/cache/*
 app/logs/*
 bin/*
 *tags
+src/App/Resources/public/img/cheeses/*
