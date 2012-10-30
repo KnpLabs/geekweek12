@@ -194,4 +194,53 @@ class ConventionalLoader extends ObjectBehavior
 
         $routes->shouldHaveCount(4);
     }
+
+    function it_should_load_collections_with_custom_parameters($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'    => '/custom/prefix',
+                'resources' => array(
+                    'show' => '/please/{id}/show',
+                    'bam'  => array(
+                        'pattern'      => '/please/{id}/bam',
+                        'requirements' => array('_method' => 'GET', 'id' => '\\d+'),
+                        'defaults'     => array('_is_secured' => true)
+                    ),
+                ),
+                'collections' => array(
+                    'index'  => '/list',
+                    'paf'    => array(
+                        'pattern'      => '/pif-paf',
+                        'requirements' => array('_method' => 'POST'),
+                        'defaults'     => array('_top_menu' => 'guns')
+                    ),
+                )
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/list');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/pif-paf');
+        $paf->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf', '_top_menu' => 'guns'));
+        $paf->getRequirements()->shouldReturn(array('_method' => 'POST'));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
+        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam', '_is_secured' => true));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $routes->shouldHaveCount(4);
+    }
 }
