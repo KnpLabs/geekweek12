@@ -2,8 +2,12 @@
 
 {% block body %}
 
-<h1>3 most rated cheeses</h1>
+<h1>{{ milk }} cheeses</h1>
 
 {% include 'App:Cheese:_list.html.twig' with {'cheeses': cheeses} %}
+
+<footer>
+    <a href="{{ path('index_cheeses') }}">Back</a>
+</footer>
 
 {% endblock %}

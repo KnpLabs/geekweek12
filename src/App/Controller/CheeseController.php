@@ -11,6 +11,38 @@ class CheeseController extends Controller
         return array('cheeses' => $this->getRepository()->findAll(true, 3));
     }
 
+    public function indexRegionAction($region)
+    {
+        return array(
+            'cheeses' => $this->getRepository()->findAllByRegion($region, true, 3),
+            'region'  => $region,
+        );
+    }
+
+    public function indexMilkAction($milk)
+    {
+        return array(
+            'cheeses' => $this->getRepository()->findAllByMilk($milk, true, 3),
+            'milk'    => $milk,
+        );
+    }
+
+    public function showAction($name)
+    {
+        $cheese = $this->findOneCheeseOr404($name);
+
+        return array('cheese' => $cheese);
+    }
+
+    public function rateAction($name, $score)
+    {
+        $cheese = $this->findOneCheeseOr404($name);
+        $cheese->rate($score);
+        $this->getEntityManager()->flush();
+
+        return $this->redirectRoute('show_cheese', array('name' => $name));
+    }
+
     public function listRegionAction()
     {
         return $this->render('App:Cheese:listRegion.html.twig', array(
@@ -27,6 +59,22 @@ class CheeseController extends Controller
 
     private function getRepository()
     {
-        return $this->getDoctrine()->getEntityManager()->getRepository('App\Entity\Cheese');
+        return $this->getEntityManager()->getRepository('App\Entity\Cheese');
+    }
+
+    private function getEntityManager()
+    {
+        return $this->getDoctrine()->getEntityManager();
+    }
+
+    private function findOneCheeseOr404($name)
+    {
+        $cheese = $this->getRepository()->findOneByName($name);
+
+        if (!$cheese) {
+            throw $this->createNotFoundException(sprintf('Couldn\'t find cheese %s', $name));
+        }
+
+        return $cheese;
     }
 }

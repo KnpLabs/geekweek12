@@ -4,8 +4,8 @@ Feature: Browse cheeses
     I should be able to browse cheeses
 
     Background:
-        Given the following products:
-            | Name        | Region    | Type of milk | rating |
+        Given the following cheeses:
+            | name        | region    | milk         | rating |
             | Camembert   | Normandie | Vache        | 5/5    |
             | Gruyère     | Suisse    | Vache        | 2/5    |
             | Maroilles   | Nord      | Vache        | 2/5    |

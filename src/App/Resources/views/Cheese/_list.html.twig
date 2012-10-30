@@ -1,0 +1,20 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Type of milk</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for cheese in cheeses %}
+        <tr data-url="{{ path('show_cheese', {'name': cheese.name }) }}">
+            <td>{{ cheese.name }}</td>
+            <td>{{ cheese.region }}</td>
+            <td>{{ cheese.milk }}</td>
+            <td>{% for star in range(1, cheese.score) %}<span>★</span>{% endfor %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -41,11 +41,6 @@ class Cheese
      */
     private $totalVote;
 
-    public function getScore()
-    {
-        return $this->totalRating / $this->totalVote;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -109,5 +104,16 @@ class Cheese
     public function getTotalVote()
     {
         return $this->totalVote;
+    }
+
+    public function getScore()
+    {
+        return round($this->totalRating / $this->totalVote, 0);
+    }
+
+    public function rate($score)
+    {
+        $this->totalRating += $score;
+        $this->totalVote++;
     }
 }

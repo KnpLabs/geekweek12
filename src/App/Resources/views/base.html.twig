@@ -10,6 +10,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/bootstrap.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}" />
         {% endblock %}
     </head>
     <body>
@@ -25,5 +26,9 @@
                 </div>
             </div>
         </div>
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('bundles/app/js/jquery.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

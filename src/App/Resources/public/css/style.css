@@ -1,0 +1,19 @@
+.table-hover tr{
+    cursor: pointer;
+}
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 20px;
+}
+.rating > a {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+.rating > a:hover:before,
+.rating > a:hover ~ a:before {
+    content: "\2605";
+    position: absolute;
+}

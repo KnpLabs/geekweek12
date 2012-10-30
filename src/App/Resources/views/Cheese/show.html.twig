@@ -1,0 +1,22 @@
+{% extends 'App::base.html.twig' %}
+
+{% block body %}
+
+<h1>{{ cheese.name }}</h1>
+<em><a href="{{ path('index_cheeses_milk', {'milk': cheese.milk}) }}">{{ cheese.milk }}</a> cheese from <a href="{{ path('index_cheeses_region', {'region': cheese.region}) }}">{{ cheese.region }}</a></em>
+
+<p>Rating: {% for star in range(1, cheese.score) %}<span>★</span>{% endfor %} <small>(Evaluated {{ cheese.totalVote }} times)</small></p>
+
+<div class="rating">
+    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 5}) }}">☆</a>
+    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 4}) }}">☆</a>
+    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 3}) }}">☆</a>
+    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 2}) }}">☆</a>
+    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 1}) }}">☆</a>
+</div>
+
+<footer>
+    <a href="{{ path('index_cheeses') }}">Back</a>
+</footer>
+
+{% endblock %}
