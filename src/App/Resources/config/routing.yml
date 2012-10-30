@@ -1,6 +1,8 @@
 App:Cheeses:
     resources:
         show: /{name}
+        edit: /{name}/edit
+        update: /{name}
 
 App:Cheeses:indexRegion: /region/{region}
 

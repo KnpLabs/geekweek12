@@ -1,0 +1,17 @@
+{% extends 'App::base.html.twig' %}
+
+{% block content %}
+
+<h1>Update a cheese</h1>
+
+<form action="{{ path('app_cheeses_update', {'name': cheese.name}) }}" {{ form_enctype(form) }} method="POST">
+    <input type="hidden" name="_method" value="PUT" />
+
+    {{ form_widget(form) }}
+
+    <input type="submit" class="btn btn-success" value="Update" />
+    <a href="{{ path('app_cheeses_show', {'name': cheese.name}) }}" class="btn btn-danger">Cancel</a>
+
+</form>
+
+{% endblock %}

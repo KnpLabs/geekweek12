@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\RadBundle\Controller\Controller;
 use App\Entity\Cheese;
+use App\Form\EditCheeseType;
 
 class CheesesController extends Controller
 {
@@ -28,9 +29,30 @@ class CheesesController extends Controller
             }
         }
 
-        return $this->render('App:Cheeses:new.html.twig', array(
+        return array(
             'form' => $form->createView(),
-        ));
+        );
+    }
+
+    public function editAction(Request $request, $name)
+    {
+        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
+        $form   = $this->get('knp_rad.form.manager')->createFormFor($cheese, array(), new EditCheeseType);
+
+        if ($request->getMethod() === 'PUT') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $this->persistAndFlush($cheese);
+
+                return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
+            }
+        }
+
+        return array(
+            'cheese' => $cheese,
+            'form'   => $form->createView(),
+        );
     }
 
     public function indexRegionAction($region)

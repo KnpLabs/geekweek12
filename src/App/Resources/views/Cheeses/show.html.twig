@@ -3,7 +3,7 @@
 {% block toolbar %}
     {{ parent() }}
     <li class="">
-        <a href="{{ path('app_cheeses_update', { name: cheese.name }) }}"><i class=" icon-pencil"></i> Edit this cheese</a>
+        <a href="{{ path('app_cheeses_edit', { 'name': cheese.name }) }}"><i class=" icon-pencil"></i> Edit this cheese</a>
     </li>
 {% endblock %}
 
