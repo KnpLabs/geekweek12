@@ -1,51 +1,43 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="fr"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="fr"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="fr"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+{% extends 'KnpRadBundle:Bootstrap:twitter_bootstrap.html.twig' %}
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/bootstrap.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}" />
-        {% endblock %}
-    </head>
-    <body>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
-                    <span class="brand">Cheese Factory</span>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="">
-                                <a href="{{ path('app_cheeses_index') }}"><i class="icon-home"></i> Home</a>
-                            </li>
-                            <li class="">
-                                <a href="{{ path('app_cheeses_new') }}"><i class="icon-plus"></i> Add a new cheese</a>
-                            </li>
-                        </ul>
-                    </div>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <span class="brand">Cheese Factory</span>
+                <div>
+                    <ul class="nav">
+                        <li class="">
+                            <a href="{{ path('app_cheeses_index') }}"><i class="icon-home"></i> Home</a>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('app_cheeses_new') }}"><i class="icon-plus"></i> Add a new cheese</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="span2">
-                    {% render 'App:Cheeses:listRegion' %}
-                    {% render 'App:Cheeses:listMilk' %}
-                </div>
-                <div class="span10">
-                    {% block body %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="span2">
+                {% render 'App:Cheeses:listRegion' %}
+                {% render 'App:Cheeses:listMilk' %}
+            </div>
+            <div class="span10">
+                    {% block content %}
                     {% endblock %}
-                </div>
             </div>
         </div>
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/app/js/jquery.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
-        {% endblock %}
-    </body>
-</html>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
+{% endblock %}
