@@ -57,16 +57,6 @@ class CheesesController extends Controller
         ));
     }
 
-    private function getRepository()
-    {
-        return $this->getEntityManager()->getRepository('App\Entity\Cheese');
-    }
-
-    private function getEntityManager()
-    {
-        return $this->getDoctrine()->getEntityManager();
-    }
-
     private function findOneCheeseOr404($name)
     {
         $cheese = $this->getRepository()->findOneByName($name);
