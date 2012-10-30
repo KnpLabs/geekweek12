@@ -13,29 +13,19 @@ class CheesesController extends Controller
         return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
     }
 
-    public function newAction()
-    {
-        $form = $this->get('knp_rad.form.manager')->createFormFor(new Cheese());
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $cheese = new Cheese();
+        $form   = $this->get('knp_rad.form.manager')->createFormFor($cheese);
 
-        $form = $this->get('knp_rad.form.manager')->createFormFor($cheese);
+        if ($request->getMethod() === 'POST') {
+            $form->bind($request);
 
-        $form->bind($request);
+            if ($form->isValid()) {
+                $this->persistAndFlush($cheese);
 
-        if($form->isValid()){
-
-
-            $this->persistAndFlush($cheese);
-            return $this->redirectRoute('show_cheese', array('name' => $cheese->getName()));
-
+                return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
+            }
         }
 
         return $this->render('App:Cheeses:new.html.twig', array(
@@ -72,25 +62,25 @@ class CheesesController extends Controller
         $cheese->rate($score);
         $this->getEntityManager()->flush();
 
-        return $this->redirectRoute('show_cheese', array('name' => $name));
+        return $this->redirectRoute('app_cheeses_show', array('name' => $name));
     }
 
     public function listRegionAction()
     {
-        return $this->render('App:Cheese:listRegion.html.twig', array(
-            'regions' => $this->getRepository()->findRegions(),
+        return $this->render('App:Cheeses:listRegion.html.twig', array(
+            'regions' => $this->getCheeseRepository()->findRegions(),
         ));
     }
 
     public function listMilkAction()
     {
-        return $this->render('App:Cheese:listMilk.html.twig', array(
-            'milks' => $this->getRepository()->findMilks(),
+        return $this->render('App:Cheeses:listMilk.html.twig', array(
+            'milks' => $this->getCheeseRepository()->findMilks(),
         ));
     }
 
-    protected function getRepository()
+    protected function getCheeseRepository()
     {
-        return $this->getDoctrine()->getEntityManager()->getRepository('App\Entity\Cheese');
+        return $this->getRepository(new Cheese);
     }
 }

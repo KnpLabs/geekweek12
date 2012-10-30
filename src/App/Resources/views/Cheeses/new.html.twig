@@ -4,7 +4,7 @@
 
 <h1>Create a new cheese</h1>
 
-<form action="{{ path('create_cheese') }}" {{ form_enctype(form) }} method="POST" >
+<form action="{{ path('app_cheeses_create') }}" {{ form_enctype(form) }} method="POST" >
 
     {{ form_widget(form) }}
 

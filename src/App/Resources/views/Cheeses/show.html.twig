@@ -4,11 +4,11 @@
 
 <h1>{{ cheese.name }}</h1>
 <em>
-    <a class="label label-info" href="{{ path('index_cheeses_milk', {'milk': cheese.milk}) }}">
+    <a class="label label-info" href="{{ path('app_cheeses_indexMilk', {'milk': cheese.milk}) }}">
         {{ cheese.milk }}
     </a>
     &nbsp;cheese from&nbsp;
-     <a class="label label-info" href="{{ path('index_cheeses_region', {'region': cheese.region}) }}">
+     <a class="label label-info" href="{{ path('app_cheeses_indexRegion', {'region': cheese.region}) }}">
         {{ cheese.region }}
     </a>
 </em>
@@ -16,15 +16,15 @@
 <p>Rating: {% for star in range(1, cheese.score) %}<span>★</span>{% endfor %} <small>(Evaluated {{ cheese.totalVote }} times)</small></p>
 
 <div class="rating">
-    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 5}) }}">☆</a>
-    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 4}) }}">☆</a>
-    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 3}) }}">☆</a>
-    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 2}) }}">☆</a>
-    <a href="{{ path('rate_cheese', {'name': cheese.name, 'score': 1}) }}">☆</a>
+    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 5}) }}">☆</a>
+    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 4}) }}">☆</a>
+    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 3}) }}">☆</a>
+    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 2}) }}">☆</a>
+    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 1}) }}">☆</a>
 </div>
 
 <footer>
-    <a class="btn btn-info" href="{{ path('index_cheeses') }}">Back to homepage</a>
+    <a class="btn btn-info" href="{{ path('app_cheeses_index') }}">Back to homepage</a>
 </footer>
 
 {% endblock %}
