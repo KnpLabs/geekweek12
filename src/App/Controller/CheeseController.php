@@ -40,7 +40,7 @@ class CheeseController extends Controller
         $cheese->rate($score);
         $this->getEntityManager()->flush();
 
-        return $this->redirect($this->generateUrl('show_cheese', array('name' => $name)));
+        return $this->redirectRoute('show_cheese', array('name' => $name));
     }
 
     public function listRegionAction()
