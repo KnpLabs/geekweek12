@@ -14,7 +14,7 @@
         <tr data-url="{{ path('app_cheeses_show', {'name': cheese.name }) }}">
             <td>
                 <center>
-                    <img src="{{ asset('bundles/app/img/cheeses/' ~ cheese.id ~ '.jpg') }}">
+                    <img class="img-rounded" src="{{ asset('bundles/app/img/cheeses/' ~ cheese.id ~ '.jpg') }}">
                 </center>
             </td>
             <td><a href="{{ path('app_cheeses_show', {'name': cheese.name }) }}">{{ cheese.name }}</a></td>

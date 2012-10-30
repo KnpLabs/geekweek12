@@ -21,6 +21,7 @@
 }
 .rating > a {
     display: inline-block;
+    text-decoration: none;
     position: relative;
     width: 1.1em;
 }
