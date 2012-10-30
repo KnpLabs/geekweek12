@@ -8,13 +8,13 @@ class CheesesController extends Controller
 {
     public function indexAction()
     {
-        return array('cheeses' => $this->getRepository()->findAll(true, 3));
+        return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
     }
 
     public function indexRegionAction($region)
     {
         return array(
-            'cheeses' => $this->getRepository()->findAllByRegion($region, true, 3),
+            'cheeses' => $this->getCheeseRepository()->findAllByRegion($region, true, 3),
             'region'  => $region,
         );
     }
@@ -22,21 +22,21 @@ class CheesesController extends Controller
     public function indexMilkAction($milk)
     {
         return array(
-            'cheeses' => $this->getRepository()->findAllByMilk($milk, true, 3),
+            'cheeses' => $this->getCheeseRepository()->findAllByMilk($milk, true, 3),
             'milk'    => $milk,
         );
     }
 
     public function showAction($name)
     {
-        $cheese = $this->findOneCheeseOr404($name);
+        $cheese = $this->findEntityOr404('App\Entity\Cheese', array('name' => $name));
 
         return array('cheese' => $cheese);
     }
 
     public function rateAction($name, $score)
     {
-        $cheese = $this->findOneCheeseOr404($name);
+        $cheese = $this->findEntityOr404('App\Entity\Cheese', array('name' => $name));
         $cheese->rate($score);
         $this->getEntityManager()->flush();
 
@@ -46,25 +46,19 @@ class CheesesController extends Controller
     public function listRegionAction()
     {
         return $this->render('App:Cheeses:listRegion.html.twig', array(
-            'regions' => $this->getRepository()->findRegions(),
+            'regions' => $this->getCheeseRepository()->findRegions(),
         ));
     }
 
     public function listMilkAction()
     {
         return $this->render('App:Cheeses:listMilk.html.twig', array(
-            'milks' => $this->getRepository()->findMilks(),
+            'milks' => $this->getCheeseRepository()->findMilks(),
         ));
     }
 
-    private function findOneCheeseOr404($name)
+    private function getCheeseRepository()
     {
-        $cheese = $this->getRepository()->findOneByName($name);
-
-        if (!$cheese) {
-            throw $this->createNotFoundException(sprintf('Couldn\'t find cheese %s', $name));
-        }
-
-        return $cheese;
+        return $this->getRepository('App\Entity\Cheese');
     }
 }
