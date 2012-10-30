@@ -12,29 +12,38 @@
 
 {% block content %}
 
-<h1>{{ cheese.name }}</h1>
-<em>
-    <a class="label label-info" href="{{ path('app_cheeses_indexMilk', {'milk': cheese.milk}) }}">
-        {{ cheese.milk }}
-    </a>
-    &nbsp;cheese from&nbsp;
-     <a class="label label-info" href="{{ path('app_cheeses_indexRegion', {'region': cheese.region}) }}">
-        {{ cheese.region }}
-    </a>
-</em>
+<div class="container-fluid cheese">
+    <div class="row-fluid">
+        <div class="span4">
+            <img src="{{ asset('bundles/app/img/cheeses/' ~ cheese.id ~ '.jpg') }}">
+        </div>
+        <div class="span6">
+            <h1>{{ cheese.name }}</h1>
+            <em>
+                <a class="label label-info" href="{{ path('app_cheeses_indexMilk', {'milk': cheese.milk}) }}">
+                    {{ cheese.milk }}
+                </a>
+                &nbsp;cheese from&nbsp;
+                <a class="label label-info" href="{{ path('app_cheeses_indexRegion', {'region': cheese.region}) }}">
+                    {{ cheese.region }}
+                </a>
+            </em>
 
-<p>Rating: {% for star in range(1, cheese.score) %}<span>★</span>{% endfor %} <small>(Evaluated {{ cheese.totalVote }} times)</small></p>
+            <p>Rating: {% for star in range(1, cheese.score) %}<span>★</span>{% endfor %} <small>(Evaluated {{ cheese.totalVote }} times)</small></p>
 
-<div class="rating">
-    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 5}) }}">☆</a>
-    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 4}) }}">☆</a>
-    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 3}) }}">☆</a>
-    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 2}) }}">☆</a>
-    <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 1}) }}">☆</a>
+            <div class="rating">
+                <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 5}) }}">☆</a>
+                <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 4}) }}">☆</a>
+                <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 3}) }}">☆</a>
+                <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 2}) }}">☆</a>
+                <a href="{{ path('app_cheeses_rate', {'name': cheese.name, 'score': 1}) }}">☆</a>
+            </div>
+
+            <footer>
+                <a class="btn btn-info" href="{{ path('app_cheeses_index') }}">Back to homepage</a>
+            </footer>
+        </div>
+    </div>
 </div>
-
-<footer>
-    <a class="btn btn-info" href="{{ path('app_cheeses_index') }}">Back to homepage</a>
-</footer>
 
 {% endblock %}

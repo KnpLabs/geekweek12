@@ -2,6 +2,18 @@
     cursor: pointer;
 }
 
+.cheeses TD{
+    vertical-align: middle;
+}
+
+.cheeses IMG{
+    height: 80px;
+}
+
+.cheese IMG{
+    width: 175px;
+}
+
 .rating {
     unicode-bidi: bidi-override;
     direction: rtl;

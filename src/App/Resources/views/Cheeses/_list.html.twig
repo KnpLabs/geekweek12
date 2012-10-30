@@ -1,7 +1,8 @@
 
-<table class="table table-bordered table-hover">
+<table class="cheeses table table-bordered table-hover">
     <thead>
         <tr>
+            <th />
             <th>Name</th>
             <th>Region</th>
             <th>Type of milk</th>
@@ -11,6 +12,11 @@
     <tbody>
     {% for cheese in cheeses %}
         <tr data-url="{{ path('app_cheeses_show', {'name': cheese.name }) }}">
+            <td>
+                <center>
+                    <img src="{{ asset('bundles/app/img/cheeses/' ~ cheese.id ~ '.jpg') }}">
+                </center>
+            </td>
             <td><a href="{{ path('app_cheeses_show', {'name': cheese.name }) }}">{{ cheese.name }}</a></td>
             <td>{{ cheese.region }}</td>
             <td>{{ cheese.milk }}</td>
