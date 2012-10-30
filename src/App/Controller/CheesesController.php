@@ -12,7 +12,7 @@ class CheesesController extends Controller
     {
         return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
     }
-    
+
     public function newAction()
     {
         $form = $this->get('knp_rad.form.manager')->createFormFor(new Cheese());
@@ -21,7 +21,7 @@ class CheesesController extends Controller
             'form' => $form->createView(),
         );
     }
-    
+
     public function createAction(Request $request)
     {
         $cheese = new Cheese();
@@ -77,20 +77,20 @@ class CheesesController extends Controller
 
     public function listRegionAction()
     {
-        return $this->render('App:Cheeses:listRegion.html.twig', array(
-            'regions' => $this->getCheeseRepository()->findRegions(),
+        return $this->render('App:Cheese:listRegion.html.twig', array(
+            'regions' => $this->getRepository()->findRegions(),
         ));
     }
 
     public function listMilkAction()
     {
-        return $this->render('App:Cheeses:listMilk.html.twig', array(
-            'milks' => $this->getCheeseRepository()->findMilks(),
+        return $this->render('App:Cheese:listMilk.html.twig', array(
+            'milks' => $this->getRepository()->findMilks(),
         ));
     }
 
-    private function getCheeseRepository()
+    protected function getRepository()
     {
-        return $this->getRepository('App\Entity\Cheese');
+        return $this->getDoctrine()->getEntityManager()->getRepository('App\Entity\Cheese');
     }
 }

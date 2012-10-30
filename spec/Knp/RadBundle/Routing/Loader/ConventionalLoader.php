@@ -3,6 +3,9 @@
 namespace spec\Knp\RadBundle\Routing\Loader;
 
 use PHPSpec2\ObjectBehavior;
+use PHPSpec2\Exception\Example\PendingException;
+
+use InvalidArgumentException;
 
 class ConventionalLoader extends ObjectBehavior
 {
@@ -19,7 +22,7 @@ class ConventionalLoader extends ObjectBehavior
 
     function it_should_support_conventional_resources()
     {
-        $this->supports('', 'conventional')->shouldReturn(true);
+        $this->supports('', 'rad_convention')->shouldReturn(true);
     }
 
     function it_should_not_support_other_resources()
@@ -136,21 +139,311 @@ class ConventionalLoader extends ObjectBehavior
         $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:index'));
         $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
-        $index = $routes->get('app_cheeses_paf');
-        $index->getPattern()->shouldReturn('/custom/prefix/paf');
-        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf'));
-        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/paf');
+        $paf->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf'));
+        $paf->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/custom/prefix/{id}');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
         $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
 
-        $show = $routes->get('app_cheeses_bam');
-        $show->getPattern()->shouldReturn('/custom/prefix/{id}/bam');
-        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
 
         $routes->shouldHaveCount(4);
+    }
+
+    function it_should_load_collections_with_specified_action_patterns($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'    => '/custom/prefix',
+                'resources' => array(
+                    'show' => '/please/{id}/show',
+                    'bam'  => '/please/{id}/bam',
+                ),
+                'collections' => array(
+                    'index'  => '/list',
+                    'paf'    => '/ouch',
+                )
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/list');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/ouch');
+        $paf->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf'));
+        $paf->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
+        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
+
+        $routes->shouldHaveCount(4);
+    }
+
+    function it_should_load_collections_with_custom_parameters($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'    => '/custom/prefix',
+                'resources' => array(
+                    'show' => '/please/{id}/show',
+                    'bam'  => array(
+                        'pattern'      => '/please/{id}/bam',
+                        'requirements' => array('_method' => 'GET', 'id' => '\\d+'),
+                        'defaults'     => array('_is_secured' => true)
+                    ),
+                ),
+                'collections' => array(
+                    'index'  => '/list',
+                    'paf'    => array(
+                        'pattern'      => '/pif-paf',
+                        'requirements' => array('_method' => 'POST'),
+                        'defaults'     => array('_top_menu' => 'guns')
+                    ),
+                )
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/list');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/pif-paf');
+        $paf->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:paf', '_top_menu' => 'guns'));
+        $paf->getRequirements()->shouldReturn(array('_method' => 'POST'));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
+        $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam', '_is_secured' => true));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+
+        $routes->shouldHaveCount(4);
+    }
+
+    function it_should_merge_defaults_and_requirements_into_child_routes($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'       => '/custom/prefix',
+                'defaults'     => array('_cheeses_filter' => 'french'),
+                'requirements' => array('_format' => 'html|xml'),
+
+                'resources' => array(
+                    'defaults'     => array('_is_secured' => true),
+                    'requirements' => array('id' => '\\d+'),
+
+                    'show' => '/please/{id}/show',
+                    'bam'  => array(
+                        'pattern'      => '/please/{id}/bam',
+                        'requirements' => array('_method' => 'POST')
+                    ),
+                ),
+                'collections' => array(
+                    'defaults'     => array('_top_menu' => 'guns'),
+                    'requirements' => array('_stuff' => 'DELETE'),
+
+                    'index'  => '/list',
+                    'paf'    => '/pif-paf'
+                )
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/list');
+        $index->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_top_menu'       => 'guns',
+            '_controller'     => 'App:Cheeses:index',
+        ));
+        $index->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            '_stuff'  => 'DELETE',
+            '_method' => 'GET',
+        ));
+
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/pif-paf');
+        $paf->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_top_menu'       => 'guns',
+            '_controller'     => 'App:Cheeses:paf',
+        ));
+        $paf->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            '_stuff'  => 'DELETE',
+            '_method' => 'GET',
+        ));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
+        $show->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_is_secured'     => true,
+            '_controller'     => 'App:Cheeses:show',
+        ));
+        $show->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            'id'      => '\\d+',
+            '_method' => 'GET',
+        ));
+
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_is_secured'     => true,
+            '_controller'     => 'App:Cheeses:bam',
+        ));
+        $bam->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            'id'      => '\\d+',
+            '_method' => 'POST',
+        ));
+
+        $routes->shouldHaveCount(4);
+    }
+
+    function it_should_load_simple_routes_with_pattern($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses:list' => '/cheeses/{id}/list'
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_cheeses_list');
+        $list->getPattern()->shouldReturn('/cheeses/{id}/list');
+        $list->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:list'));
+        $list->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_load_simple_routes_with_params($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses:list' => array(
+                'pattern'  => '/cheeses/list-cheeses',
+                'defaults' => array('_menu' => 'list')
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_cheeses_list');
+        $list->getPattern()->shouldReturn('/cheeses/list-cheeses');
+        $list->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:list', '_menu' => 'list'));
+        $list->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_create_proper_route_for_namespaced_controller($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses:list' => '/admin/cheeses/list-cheeses'
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_admin_cheeses_list');
+        $list->getPattern()->shouldReturn('/admin/cheeses/list-cheeses');
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_generate_proper_prefix_for_namespaced_controller($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses' => null
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_admin_cheeses_index');
+        $index->getPattern()->shouldReturn('/admin/cheeses/');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Admin\Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(7);
+    }
+
+    function it_should_throw_exception_for_wrong_route_matcher($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App' => null
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            'You should use `Bundle:Controller` or `Bundle:Controller:Action` notation as route. `App` given.'
+        ))->duringLoad('routing.yml');
+    }
+
+    function it_should_throw_exception_if_unsupported_controller_route_param_provided($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses' => array(
+                'unsopported_key' => true
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            '`unsopported_key` parameter is not supported by `App:Admin\Cheeses` controller route. Use one of [prefix, defaults, requirements, collections, resources].'
+        ))->duringLoad('routing.yml');
+    }
+
+    function it_should_throw_exception_if_unsupported_action_route_param_provided($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses:show' => array(
+                'unsopported_key' => true
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            '`unsopported_key` parameter is not supported by `App:Admin\Cheeses:show` action route. Use one of [pattern, defaults, requirements].'
+        ))->duringLoad('routing.yml');
+    }
+
+    function it_should_throw_exception_if_user_uses_pattern_key_instead_of_prefix($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'pattern' => '/custom/prefix'
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            'The `pattern` is only supported for actions, if you want to prefix all the routes of the controller, use `prefix` instead.'
+        ))->duringLoad('routing.yml');
     }
 }
