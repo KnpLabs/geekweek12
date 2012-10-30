@@ -149,7 +149,7 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_bam');
         $show->getPattern()->shouldReturn('/custom/prefix/{id}/bam');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
 
         $routes->shouldHaveCount(4);
     }
