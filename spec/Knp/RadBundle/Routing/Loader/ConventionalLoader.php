@@ -243,4 +243,89 @@ class ConventionalLoader extends ObjectBehavior
 
         $routes->shouldHaveCount(4);
     }
+
+    function it_should_merge_defaults_and_requirements_into_child_routes($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'prefix'       => '/custom/prefix',
+                'defaults'     => array('_cheeses_filter' => 'french'),
+                'requirements' => array('_format' => 'html|xml'),
+
+                'resources' => array(
+                    'defaults'     => array('_is_secured' => true),
+                    'requirements' => array('id' => '\\d+'),
+
+                    'show' => '/please/{id}/show',
+                    'bam'  => array(
+                        'pattern'      => '/please/{id}/bam',
+                        'requirements' => array('_method' => 'POST')
+                    ),
+                ),
+                'collections' => array(
+                    'defaults'     => array('_top_menu' => 'guns'),
+                    'requirements' => array('_stuff' => 'DELETE'),
+
+                    'index'  => '/list',
+                    'paf'    => '/pif-paf'
+                )
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_cheeses_index');
+        $index->getPattern()->shouldReturn('/custom/prefix/list');
+        $index->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_top_menu'       => 'guns',
+            '_controller'     => 'App:Cheeses:index',
+        ));
+        $index->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            '_stuff'  => 'DELETE',
+            '_method' => 'GET',
+        ));
+
+        $paf = $routes->get('app_cheeses_paf');
+        $paf->getPattern()->shouldReturn('/custom/prefix/pif-paf');
+        $paf->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_top_menu'       => 'guns',
+            '_controller'     => 'App:Cheeses:paf',
+        ));
+        $paf->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            '_stuff'  => 'DELETE',
+            '_method' => 'GET',
+        ));
+
+        $show = $routes->get('app_cheeses_show');
+        $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
+        $show->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_is_secured'     => true,
+            '_controller'     => 'App:Cheeses:show',
+        ));
+        $show->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            'id'      => '\\d+',
+            '_method' => 'GET',
+        ));
+
+        $bam = $routes->get('app_cheeses_bam');
+        $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
+        $bam->getDefaults()->shouldReturn(array(
+            '_cheeses_filter' => 'french',
+            '_is_secured'     => true,
+            '_controller'     => 'App:Cheeses:bam',
+        ));
+        $bam->getRequirements()->shouldReturn(array(
+            '_format' => 'html|xml',
+            'id'      => '\\d+',
+            '_method' => 'POST',
+        ));
+
+        $routes->shouldHaveCount(4);
+    }
 }
