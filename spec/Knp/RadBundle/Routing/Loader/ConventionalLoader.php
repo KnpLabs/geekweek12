@@ -3,6 +3,9 @@
 namespace spec\Knp\RadBundle\Routing\Loader;
 
 use PHPSpec2\ObjectBehavior;
+use PHPSpec2\Exception\Example\PendingException;
+
+use InvalidArgumentException;
 
 class ConventionalLoader extends ObjectBehavior
 {
@@ -327,5 +330,107 @@ class ConventionalLoader extends ObjectBehavior
         ));
 
         $routes->shouldHaveCount(4);
+    }
+
+    function it_should_load_simple_routes_with_pattern($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses:list' => '/cheeses/{id}/list'
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_cheeses_list');
+        $list->getPattern()->shouldReturn('/cheeses/{id}/list');
+        $list->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:list'));
+        $list->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_load_simple_routes_with_params($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses:list' => array(
+                'pattern'  => '/cheeses/list-cheeses',
+                'defaults' => array('_menu' => 'list')
+            )
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_cheeses_list');
+        $list->getPattern()->shouldReturn('/cheeses/list-cheeses');
+        $list->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:list', '_menu' => 'list'));
+        $list->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_create_proper_route_for_namespaced_controller($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses:list' => '/admin/cheeses/list-cheeses'
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $list = $routes->get('app_admin_cheeses_list');
+        $list->getPattern()->shouldReturn('/admin/cheeses/list-cheeses');
+
+        $routes->shouldHaveCount(1);
+    }
+
+    function it_should_generate_proper_prefix_for_namespaced_controller($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses' => null
+        ));
+
+        $routes = $this->load('routing.yml');
+
+        $index = $routes->get('app_admin_cheeses_index');
+        $index->getPattern()->shouldReturn('/admin/cheeses/');
+        $index->getDefaults()->shouldReturn(array('_controller' => 'App:Admin\Cheeses:index'));
+        $index->getRequirements()->shouldReturn(array('_method' => 'GET'));
+
+        $routes->shouldHaveCount(7);
+    }
+
+    function it_should_throw_exception_for_wrong_route_matcher($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App' => null
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            'You should use `Bundle:Controller` or `Bundle:Controller:Action` notation as route. `App` given.'
+        ))->duringLoad('routing.yml');
+    }
+
+    function it_should_throw_exception_if_unsupported_controller_route_param_provided($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses' => array(
+                'unsopported_key' => true
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            '`unsopported_key` parameter is not supported by `App:Admin\Cheeses` controller route. Use one of [prefix, defaults, requirements, collections, resources].'
+        ))->duringLoad('routing.yml');
+    }
+
+    function it_should_throw_exception_if_unsupported_action_route_param_provided($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Admin\Cheeses:show' => array(
+                'unsopported_key' => true
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            '`unsopported_key` parameter is not supported by `App:Admin\Cheeses:show` action route. Use one of [pattern, defaults, requirements].'
+        ))->duringLoad('routing.yml');
     }
 }
