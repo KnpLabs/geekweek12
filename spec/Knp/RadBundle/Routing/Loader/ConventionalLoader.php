@@ -433,4 +433,17 @@ class ConventionalLoader extends ObjectBehavior
             '`unsopported_key` parameter is not supported by `App:Admin\Cheeses:show` action route. Use one of [pattern, defaults, requirements].'
         ))->duringLoad('routing.yml');
     }
+
+    function it_should_throw_exception_if_user_uses_pattern_key_instead_of_prefix($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'App:Cheeses' => array(
+                'pattern' => '/custom/prefix'
+            )
+        ));
+
+        $this->shouldThrow(new InvalidArgumentException(
+            'The `pattern` is only supported for actions, if you want to prefix all the routes of the controller, use `prefix` instead.'
+        ))->duringLoad('routing.yml');
+    }
 }
