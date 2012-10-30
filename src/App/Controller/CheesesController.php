@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Knp\RadBundle\Controller\Controller;
 
-class CheeseController extends Controller
+class CheesesController extends Controller
 {
     public function indexAction()
     {
@@ -45,14 +45,14 @@ class CheeseController extends Controller
 
     public function listRegionAction()
     {
-        return $this->render('App:Cheese:listRegion.html.twig', array(
+        return $this->render('App:Cheeses:listRegion.html.twig', array(
             'regions' => $this->getRepository()->findRegions(),
         ));
     }
 
     public function listMilkAction()
     {
-        return $this->render('App:Cheese:listMilk.html.twig', array(
+        return $this->render('App:Cheeses:listMilk.html.twig', array(
             'milks' => $this->getRepository()->findMilks(),
         ));
     }

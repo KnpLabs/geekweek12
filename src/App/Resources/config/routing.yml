@@ -1,23 +1,23 @@
 app_homepage:
     pattern:  /
-    defaults: { _controller: App:Cheese:index }
+    defaults: { _controller: App:Cheeses:index }
 
 index_cheeses:
     pattern:  /cheeses
-    defaults: { _controller: App:Cheese:index }
+    defaults: { _controller: App:Cheeses:index }
 
 index_cheeses_milk:
     pattern:  /milk/{milk}
-    defaults: { _controller: App:Cheese:indexMilk }
+    defaults: { _controller: App:Cheeses:indexMilk }
 
 index_cheeses_region:
     pattern:  /region/{region}
-    defaults: { _controller: App:Cheese:indexRegion }
+    defaults: { _controller: App:Cheeses:indexRegion }
 
 show_cheese:
     pattern: /cheeses/{name}
-    defaults: { _controller: App:Cheese:show }
+    defaults: { _controller: App:Cheeses:show }
 
 rate_cheese:
     pattern: /cheese/{name}/rate/{score}
-    defaults: { _controller: App:Cheese:rate }
+    defaults: { _controller: App:Cheeses:rate }
