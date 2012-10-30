@@ -6,6 +6,14 @@ index_cheeses:
     pattern:  /cheeses
     defaults: { _controller: App:Cheeses:index }
 
+new_cheese:
+    pattern:  /cheeses/new
+    defaults: { _controller: App:Cheeses:new }
+
+create_cheese:
+    pattern:  /cheeses/create
+    defaults: { _controller: App:Cheeses:create }
+
 index_cheeses_milk:
     pattern:  /milk/{milk}
     defaults: { _controller: App:Cheeses:indexMilk }

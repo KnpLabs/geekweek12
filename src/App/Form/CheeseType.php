@@ -14,8 +14,6 @@ class CheeseType extends AbstractType
             ->add('name')
             ->add('region')
             ->add('milk')
-            ->add('totalRating')
-            ->add('totalVote')
         ;
     }
 

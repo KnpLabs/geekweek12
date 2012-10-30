@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Entity\CheeseRepository")
+ * @UniqueEntity("name")
  */
 class Cheese
 {
@@ -17,7 +20,7 @@ class Cheese
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -34,12 +37,12 @@ class Cheese
     /**
      * @ORM\Column(name="totalRating", type="bigint")
      */
-    private $totalRating;
+    private $totalRating = 0;
 
     /**
      * @ORM\Column(name="totalVote", type="bigint")
      */
-    private $totalVote;
+    private $totalVote = 0;
 
     public function getId()
     {
@@ -108,7 +111,7 @@ class Cheese
 
     public function getScore()
     {
-        return round($this->totalRating / $this->totalVote, 0);
+        return  $this->totalVote > 0 ? round($this->totalRating / $this->totalVote, 0) : 0;
     }
 
     public function rate($score)

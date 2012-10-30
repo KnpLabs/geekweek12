@@ -2,13 +2,45 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Knp\RadBundle\Controller\Controller;
+use App\Entity\Cheese;
 
 class CheesesController extends Controller
 {
     public function indexAction()
     {
         return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
+    }
+    
+    public function newAction()
+    {
+        $form = $this->get('knp_rad.form.manager')->createFormFor(new Cheese());
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
+    
+    public function createAction(Request $request)
+    {
+        $cheese = new Cheese();
+
+        $form = $this->get('knp_rad.form.manager')->createFormFor($cheese);
+
+        $form->bind($request);
+
+        if($form->isValid()){
+
+
+            $this->persistAndFlush($cheese);
+            return $this->redirectRoute('show_cheese', array('name' => $cheese->getName()));
+
+        }
+
+        return $this->render('App:Cheeses:new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function indexRegionAction($region)
