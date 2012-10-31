@@ -4,24 +4,9 @@
 
 <h1>Administration</h1>
 
-{% set elements = cheeses %}
-
-<table class="table">
-    <thead>
-        {% for head in elements|toHeadersArray %}
-        <th>{{ head }}</th>
-        {% endfor %}
-    </thead>
-    <tbody>
-        {% for element in elements %}
-            <tr>
-            {% set element = element|toArray %}
-            {% for head in elements|toHeadersArray %}
-                <td>{{ element[head] }}</td>
-            {% endfor %}
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{{ bootstrap_datatable(
+    cheeses, 
+    {'name': 'Name', 'region': 'Country / Region', 'milk': 'Type of milk', 'score': 'Rating'}
+) }}
 
 {% endblock %}

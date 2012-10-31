@@ -14,7 +14,7 @@ class CheesesController extends Controller
         return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
     }
 
-    public function adminAction()
+    public function adminAction(Request $request)
     {
         return array('cheeses' => $this->getCheeseRepository()->findAll());
     }
