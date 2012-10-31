@@ -9,8 +9,14 @@
 
     {{ form_widget(form) }}
 
-    <input type="submit" class="btn btn-success" value="Update" />
-    <a href="{{ path('app_cheeses_show', {'name': cheese.name}) }}" class="btn btn-danger">Cancel</a>
+    <div class="form-horizontal">
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" class="btn btn-success" value="Update" />
+                <a href="{{ path('app_cheeses_show', {'name': cheese.name}) }}" class="btn btn-danger">Cancel</a>
+            </div>
+        </div>
+    </div>
 
 </form>
 

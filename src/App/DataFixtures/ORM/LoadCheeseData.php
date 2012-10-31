@@ -86,7 +86,8 @@ class LoadCheeseData implements FixtureInterface
     {
         $fs = new Filesystem();
 
-        $source = sprintf('%s/../Resources/%s.jpg', dirname(__FILE__), strtolower($cheese->getName()));
+
+        $source = sprintf('%s/../Resources/%s.jpg', dirname(__FILE__), $cheese->getSluggedName());
         $target = sprintf('%s/../../Resources/public/img/cheeses/%s.jpg', dirname(__FILE__), $cheese->getId());
 
         if($fs->exists($source)){
