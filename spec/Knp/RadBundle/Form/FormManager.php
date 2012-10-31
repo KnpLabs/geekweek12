@@ -8,69 +8,54 @@ use PHPSpec2\Exception\Example\PendingException;
 class FormManager extends ObjectBehavior
 {
     /**
-     * @param Symfony\Component\Form\FormFactory $factory
-     * @param Knp\RadBundle\Form\DefaultFormCreator $formCreator
+     * @param Knp\RadBundle\Form\FormCreatorInterface $creator1
+     * @param Knp\RadBundle\Form\FormCreatorInterface $creator2
+     * @param Knp\RadBundle\Form\FormCreatorInterface $creator3
      */
-    function let($factory, $formCreator)
+    public function let($creator1, $creator2, $creator3)
     {
-        $this->beConstructedWith($factory, $formCreator);
+        $this->registerCreator($creator1);
+        $this->registerCreator($creator2);
+        $this->registerCreator($creator3);
     }
 
-
-    /**
-     * @param App\Entity\Wine $wine
-     */
-    function it_should_use_form_type_if_has_one($wine, $factory)
+    function it_should_be_able_to_register_creators($creator1, $creator2)
     {
-        $factory
-            ->create('App\Form\WineType', $wine, array())
-            ->shouldBeCalled()
-        ;
-
-        $this->createFormFor($wine);
+        $this->getCreators()->shouldHaveCount(3);
     }
 
     /**
-     * @param App\Entity\Cheese $cheese
+     * @param stdClass $object
      */
-    function it_should_build_form_if_there_is_no_form_type($cheese, $formCreator, $factory)
+    function it_should_try_to_create_form_with_registered_creators($object, $creator1, $creator2)
     {
-        $formCreator
-            ->setFormBuilder($factory->createBuilder('form', $cheese, array()))
-            ->shouldBeCalled()
-        ;
+        $creator1->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator2->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
 
-        $formCreator
-            ->buildFormForObject($cheese)
-            ->shouldBeCalled()
-        ;
-
-        $this->createFormFor($cheese);
+        $this->createObjectForm($object, 'edit');
     }
 
     /**
-     * @param App\Entity\Cheese $cheese
+     * @param stdClass $object
      */
-    function it_should_create_new_form_type($cheese, $factory)
+    function its_createObjectForm_should_throw_exception_if_no_creator_fits($object, $creator1, $creator2, $creator3)
     {
-        $factory
-            ->create('App\Form\NewCheeseType', $cheese, array())
-            ->shouldBeCalled()
-        ;
+        $creator1->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator2->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator3->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
 
-        $this->createFormFor($cheese, 'new');
+        $this->shouldThrow()->duringCreateObjectForm($object, 'edit');
     }
 
     /**
-     * @param App\Entity\Cheese $cheese
+     * @param stdClass $object
      */
-    function it_should_create_edit_form_type($cheese, $factory)
+    function it_should_return_first_non_null_result_from_creator($object, $creator1, $creator2, $creator3)
     {
-        $factory
-            ->create('App\Form\EditCheeseType', $cheese, array())
-            ->shouldBeCalled()
-        ;
+        $creator1->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator2->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
+        $creator3->create($object, 'edit', array())->shouldNotBeCalled();
 
-        $this->createFormFor($cheese, 'edit');
+        $this->createObjectForm($object, 'edit');
     }
 }

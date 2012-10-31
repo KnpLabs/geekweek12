@@ -50,6 +50,21 @@ class FormTypeCreator extends ObjectBehavior
      * @param stdClass $object
      * @param stdClass $formType
      */
+    function it_should_return_form_type_with_purpose_if_there_is_one($object, $fetcher, $formType)
+    {
+        $fetcher->getClass($object)->willReturn('App\Entity\Cheese');
+        $fetcher->classExists('App\Form\EditCheeseType')->willReturn(true);
+        $fetcher->newInstance(
+            'App\Form\EditCheeseType', array($object->getWrappedSubject(), array())
+        )->shouldBeCalled()->willReturn($formType);
+
+        $this->create($object, 'edit')->shouldReturn($formType);
+    }
+
+    /**
+     * @param stdClass $object
+     * @param stdClass $formType
+     */
     function it_should_return_parent_form_type_if_no_current_found($object, $fetcher, $formType)
     {
         $fetcher->getClass($object)->willReturn('App\Entity\Roquefort');
