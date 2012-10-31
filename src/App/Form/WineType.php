@@ -6,26 +6,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CheeseType extends AbstractType
+class WineType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
-            ->add('region')
-            ->add('milk')
+            ->add('type')
+            ->add('year')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Cheese'
+            'data_class' => 'App\Entity\Wine'
         ));
     }
 
     public function getName()
     {
-        return 'app_cheesetype';
+        return 'app_winetype';
     }
 }
