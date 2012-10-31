@@ -24,6 +24,7 @@ class CheesesController extends Controller
 
             if ($form->isValid()) {
                 $this->persistAndFlush($cheese);
+                $this->setFlash('success', sprintf('Cheese %s created', $cheese->getName()), 'Successfully created');
 
                 return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
             }
@@ -44,6 +45,7 @@ class CheesesController extends Controller
 
             if ($form->isValid()) {
                 $this->persistAndFlush($cheese);
+                $this->setFlash('success', sprintf('Cheese %s updated', $cheese->getName()), 'Successfully updated');
 
                 return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
             }
