@@ -397,6 +397,16 @@ class ConventionalLoader extends ObjectBehavior
         $routes->shouldHaveCount(7);
     }
 
+    function it_should_properly_transform_camel_cased_classes_and_groups($yaml)
+    {
+        $yaml->parse('yaml file')->willReturn(array(
+            'SuperAppBundle:AdminControllers\Cheeses' => null
+        ));
+
+        $routes = $this->load('routing.yml');
+        $routes->get('superAppBundle_adminControllers_cheeses_index')->shouldNotReturn(null);
+    }
+
     function it_should_throw_exception_for_wrong_route_matcher($yaml)
     {
         $yaml->parse('yaml file')->willReturn(array(
