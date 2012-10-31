@@ -14,6 +14,6 @@ class DoctrineRepositoryFactory extends ObjectBehavior
         $definition->getFactoryService()->shouldReturn('doctrine');
         $definition->getFactoryMethod()->shouldReturn('getRepository');
         $definition->getArguments()->shouldReturn(array('App\Entity\Cheese'));
-        $definition->isPublic()->shouldReturn(false);
+        $definition->isPublic()->shouldReturn(true);
     }
 }
