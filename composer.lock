@@ -1406,12 +1406,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec2.git",
-                "reference": "v1.0.0alpha2"
+                "reference": "4eb75390b81363664d9e7519631cdb87c79fe23b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/phpspec/phpspec2/zipball/v1.0.0alpha2",
-                "reference": "v1.0.0alpha2",
+                "url": "https://github.com/phpspec/phpspec2/zipball/4eb75390b81363664d9e7519631cdb87c79fe23b",
+                "reference": "4eb75390b81363664d9e7519631cdb87c79fe23b",
                 "shasum": ""
             },
             "require": {
@@ -1422,7 +1422,7 @@
                 "symfony/finder": ">=2.1.0,<2.2.0",
                 "phpspec/php-diff": "*@dev"
             },
-            "time": "1349718360",
+            "time": "1351698370",
             "bin": [
                 "bin/phpspec"
             ],
