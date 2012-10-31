@@ -4,6 +4,8 @@ App:Cheeses:
         edit: /{name}/edit
         update: /{name}
 
+App:Cheeses:admin: /admin
+
 App:Cheeses:indexRegion: /region/{region}
 
 App:Cheeses:indexMilk: /milk/{milk}
