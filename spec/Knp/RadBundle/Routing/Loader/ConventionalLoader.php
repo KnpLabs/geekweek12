@@ -56,22 +56,22 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/cheeses/{id}');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $edit = $routes->get('app_cheeses_edit');
         $edit->getPattern()->shouldReturn('/cheeses/{id}/edit');
         $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
-        $edit->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $edit = $routes->get('app_cheeses_update');
         $edit->getPattern()->shouldReturn('/cheeses/{id}');
         $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
-        $edit->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'PUT'));
 
         $delete = $routes->get('app_cheeses_delete');
         $delete->getPattern()->shouldReturn('/cheeses/{id}');
         $delete->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:delete'));
-        $delete->getRequirements()->shouldReturn(array('_method' => 'DELETE', 'id' => '\\d+'));
+        $delete->getRequirements()->shouldReturn(array('_method' => 'DELETE'));
 
         $routes->shouldHaveCount(7);
     }
@@ -102,22 +102,22 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/custom/prefix/{id}');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $edit = $routes->get('app_cheeses_edit');
         $edit->getPattern()->shouldReturn('/custom/prefix/{id}/edit');
         $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
-        $edit->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $edit = $routes->get('app_cheeses_update');
         $edit->getPattern()->shouldReturn('/custom/prefix/{id}');
         $edit->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:edit'));
-        $edit->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
+        $edit->getRequirements()->shouldReturn(array('_method' => 'PUT'));
 
         $delete = $routes->get('app_cheeses_delete');
         $delete->getPattern()->shouldReturn('/custom/prefix/{id}');
         $delete->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:delete'));
-        $delete->getRequirements()->shouldReturn(array('_method' => 'DELETE', 'id' => '\\d+'));
+        $delete->getRequirements()->shouldReturn(array('_method' => 'DELETE'));
 
         $routes->shouldHaveCount(7);
     }
@@ -147,12 +147,12 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/custom/prefix/{id}');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $bam = $routes->get('app_cheeses_bam');
         $bam->getPattern()->shouldReturn('/custom/prefix/{id}/bam');
         $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
-        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT'));
 
         $routes->shouldHaveCount(4);
     }
@@ -188,12 +188,12 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $bam = $routes->get('app_cheeses_bam');
         $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
         $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam'));
-        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT', 'id' => '\\d+'));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'PUT'));
 
         $routes->shouldHaveCount(4);
     }
@@ -207,7 +207,7 @@ class ConventionalLoader extends ObjectBehavior
                     'show' => '/please/{id}/show',
                     'bam'  => array(
                         'pattern'      => '/please/{id}/bam',
-                        'requirements' => array('_method' => 'GET', 'id' => '\\d+'),
+                        'requirements' => array('_method' => 'GET'),
                         'defaults'     => array('_is_secured' => true)
                     ),
                 ),
@@ -237,12 +237,12 @@ class ConventionalLoader extends ObjectBehavior
         $show = $routes->get('app_cheeses_show');
         $show->getPattern()->shouldReturn('/custom/prefix/please/{id}/show');
         $show->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:show'));
-        $show->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $show->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $bam = $routes->get('app_cheeses_bam');
         $bam->getPattern()->shouldReturn('/custom/prefix/please/{id}/bam');
         $bam->getDefaults()->shouldReturn(array('_controller' => 'App:Cheeses:bam', '_is_secured' => true));
-        $bam->getRequirements()->shouldReturn(array('_method' => 'GET', 'id' => '\\d+'));
+        $bam->getRequirements()->shouldReturn(array('_method' => 'GET'));
 
         $routes->shouldHaveCount(4);
     }
