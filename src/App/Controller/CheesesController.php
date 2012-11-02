@@ -29,7 +29,7 @@ class CheesesController extends Controller
 
             if ($form->isValid()) {
                 $this->persist($cheese, true);
-                $this->getFlashBag->add('success', sprintf(
+                $this->getFlashBag()->add('success', sprintf(
                     'Cheese %s created', $cheese->getName()
                 ));
 
@@ -63,17 +63,6 @@ class CheesesController extends Controller
                 ));
             }
         }
-
-        return array(
-            'cheese' => $cheese,
-            'form'   => $form->createView(),
-        );
-    }
-
-    public function removeAction($name)
-    {
-        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
-        $form   = $this->createObjectForm($cheese, 'remove');
 
         return array(
             'cheese' => $cheese,
