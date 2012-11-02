@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Knp\RadBundle\Doctrine\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class CheeseRepository extends EntityRepository
