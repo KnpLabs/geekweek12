@@ -72,7 +72,7 @@ class CheesesController extends Controller
 
     public function removeAction($name)
     {
-        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
         $form   = $this->createObjectForm($cheese, 'remove');
 
         return array(
@@ -83,13 +83,11 @@ class CheesesController extends Controller
 
     public function deleteAction(Request $request, $name)
     {
-        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
 
         if ($request->getMethod() === 'DELETE') {
             $this->remove($cheese, true);
-            $this->getFlashBag()->add('success', sprintf(
-                'Cheese %s deleted', $cheese->getName()
-            ));
+            $this->getFlashBag()->add('success', 'Cheese deleted');
 
         }
 
@@ -132,14 +130,14 @@ class CheesesController extends Controller
     public function listRegionAction()
     {
         return array(
-            'regions' => $this->getRepository('App:Cheese')->findRegions(),
+            'regions' => $this->getRepository('App:Cheese')->findAllRegion(),
         );
     }
 
     public function listMilkAction()
     {
         return array(
-            'milks' => $this->getRepository('App:Cheese')->findMilks(),
+            'milks' => $this->getRepository('App:Cheese')->findAllMilk(),
         );
     }
 }

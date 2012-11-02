@@ -3,77 +3,71 @@
 namespace App\Entity;
 
 use Knp\RadBundle\Doctrine\EntityRepository;
+
 use Doctrine\ORM\QueryBuilder;
 
 class CheeseRepository extends EntityRepository
 {
 
-    private function getAllQueryBuilder(QueryBuilder $qb = null)
+    public function buildByRegion($region, QueryBuilder $qb = null)
     {
-        return $this
-            ->createQueryBuilder('c')
-            ->select('c')
-        ;
-    }
-
-    private function getAllByRegionQueryBuilder($region, QueryBuilder $qb = null)
-    {
-        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+        $qb = $qb === null ? $this->build() : $qb;
 
         return $qb
-            ->andWhere('c.region = :whereRegion')
+            ->andWhere($this->getAlias().'.region = :whereRegion')
             ->setParameter('whereRegion', $region)
         ;
     }
 
 
-    private function getAllByMilkQueryBuilder($milk, QueryBuilder $qb = null)
+    public function buildAllByMilk($milk, QueryBuilder $qb = null)
     {
-        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+        $qb = $qb === null ? $this->build() : $qb;
 
         return $qb
-            ->andWhere('c.milk = :whereMilk')
+            ->andWhere($this->getAlias().'.milk = :whereMilk')
             ->setParameter('whereMilk', $milk)
         ;
     }
 
-    private function getAllOrderByRating(QueryBuilder $qb = null)
+    public function buildAllOrderByRating(QueryBuilder $qb = null)
     {
-        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+
+        $qb = $qb === null ? $this->build() : $qb;
 
         return $qb
-            ->addSelect('(c.totalRating / c.totalVote) AS HIDDEN rating')
+            ->addSelect(sprintf('(%s.totalRating / %s.totalVote) AS HIDDEN rating', $this->getAlias(), $this->getAlias()))
             ->orderBy('rating', 'DESC')
         ;
     }
 
-    private function getDistinctMilkQueryBuilder(QueryBuilder $qb = null)
+    public function buildAllMilk(QueryBuilder $qb = null)
     {
-        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+        $qb = $qb === null ? $this->build() : $qb;
 
         return $qb
-            ->select('c.milk')
-            ->orderBy('c.milk')
+            ->select($this->getAlias().'.milk')
+            ->orderBy($this->getAlias().'.milk')
             ->distinct(true)
         ;
     }
 
-    private function getDistinctRegionQueryBuilder(QueryBuilder $qb = null)
+    public function buildAllRegion(QueryBuilder $qb = null)
     {
-        $qb = $qb === null ? $this->getAllQueryBuilder() : $qb;
+        $qb = $qb === null ? $this->build() : $qb;
 
         return $qb
-            ->select('c.region')
-            ->orderBy('c.region')
+            ->select($this->getAlias().'.region')
+            ->orderBy($this->getAlias().'.region')
             ->distinct(true)
         ;
     }
 
     public function findAll($sorted = false, $limit = null)
     {
-        $qb = $this->getAllQueryBuilder();
+        $qb = $this->build();
 
-        $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
+        $qb = $sorted ? $this->buildAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
 
         return $qb
@@ -84,9 +78,9 @@ class CheeseRepository extends EntityRepository
 
     public function findAllByMilk($milk, $sorted = false, $limit = null)
     {
-        $qb = $this->getAllByMilkQueryBuilder($milk);
+        $qb = $this->buildAllByMilk($milk);
 
-        $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
+        $qb = $sorted ? $this->buildAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
 
         return $qb
@@ -97,30 +91,12 @@ class CheeseRepository extends EntityRepository
 
     public function findAllByRegion($region, $sorted = false, $limit = null)
     {
-        $qb = $this->getAllByRegionQueryBuilder($region);
+        $qb = $this->buildAllByRegion($region);
 
         $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
 
         return $qb
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findRegions()
-    {
-        return $this
-            ->getDistinctRegionQueryBuilder()
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findMilks()
-    {
-        return $this
-            ->getDistinctMilkQueryBuilder()
             ->getQuery()
             ->getResult()
         ;

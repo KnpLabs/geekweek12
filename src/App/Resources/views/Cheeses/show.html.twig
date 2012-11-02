@@ -6,7 +6,12 @@
         <a href="{{ path('app_cheeses_edit', { 'name': cheese.name }) }}"><i class="icon-pencil"></i> Edit this cheese</a>
     </li>
     <li class="">
-        <a href="{{ path('app_cheeses_remove', { 'name': cheese.name }) }}"><i class="icon-remove-sign"></i> Delete this cheese</a>
+        <form method="post" action="{{ path('app_cheeses_delete', {name: cheese.name}) }}" style="margin:0" >
+            <input type="hidden" name="_method" value="DELETE" /> 
+            <button type="submit" class="btn btn-link" style="color:inherit;text-decoration:inherit;">
+                <i class="icon-remove-sign"></i> Delete this cheese</a>
+            </button>
+        </form>
     </li>
 {% endblock %}
 
