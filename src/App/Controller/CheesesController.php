@@ -70,6 +70,30 @@ class CheesesController extends Controller
         );
     }
 
+    public function removeAction($name)
+    {
+        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
+        $form   = $this->getFormFor($cheese, 'remove');
+
+        return array(
+            'cheese' => $cheese,
+            'form'   => $form->createView(),
+        );
+    }
+
+    public function deleteAction(Request $request, $name)
+    {
+        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
+
+        if ($request->getMethod() === 'DELETE') {
+            $this->removeAndFlush($cheese);
+            $this->setFlash('success', sprintf('Cheese %s deleted', $cheese->getName()), 'Successfully removed');
+
+        }
+
+        return $this->redirectRoute('app_cheeses_index');
+    }
+
     public function indexRegionAction($region)
     {
         return array(

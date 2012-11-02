@@ -44,6 +44,11 @@ class Cheese
      */
     private $totalVote = 0;
 
+    /**
+     * @ORM\Column(name="tasted", type="boolean")
+     */
+    public $tasted = false;
+
     public function getId()
     {
         return $this->id;

@@ -3,6 +3,7 @@ App:Cheeses:
         show:    /{name}
         edit:    /{name}/edit
         update:  /{name}
+        delete:  /{name}
 
 App:Cheeses:admin:       /admin
 App:Cheeses:indexRegion: /region/{region}

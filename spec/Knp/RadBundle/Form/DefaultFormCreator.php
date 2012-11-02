@@ -38,6 +38,26 @@ class DefaultFormCreator extends ObjectBehavior
         $builder->add('id')->shouldNotBeCalled();
         $builder->getForm()->willReturn($form);
 
-        $mock = $this->create($object)->shouldReturn($form);
+        $this->create($object)->shouldReturn($form);
+    }
+
+    /**
+     * @param stdClass $object
+     * @param Symfony\Component\Form\FormFactoryInterface $factory
+     * @param Knp\RadBundle\Form\ClassMetadataFetcher $fetcher
+     * @param Symfony\Component\Form\FormBuilder $builder
+     * @param Symfony\Component\Form\Form $form
+     */
+    public function it_should_create_form_based_on_object_properties($object, $factory, $fetcher, $builder, $form)
+    {
+        $fetcher->getProperties($object)->willReturn(array(
+                'termOfService', 'locked',
+        ));
+        $factory->createBuilder('form', $object, array())->willReturn($builder)->shouldBeCalled();
+        $builder->add('termOfService')->shouldBeCalled();
+        $builder->add('locked')->shouldBeCalled();
+        $builder->getForm()->willReturn($form);
+
+        $this->create($object)->shouldReturn($form);
     }
 }

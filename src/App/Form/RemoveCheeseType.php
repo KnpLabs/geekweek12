@@ -6,13 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EditCheeseType extends AbstractType
+class RemoveCheeseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('tasted')
+            ->add('name', 'hidden')
         ;
     }
 
@@ -25,6 +24,6 @@ class EditCheeseType extends AbstractType
 
     public function getName()
     {
-        return 'app_cheeseedittype';
+        return 'app_cheeseremovetype';
     }
 }
