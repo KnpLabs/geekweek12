@@ -12,6 +12,7 @@ class EditCheeseType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('tasted')
         ;
     }
 
