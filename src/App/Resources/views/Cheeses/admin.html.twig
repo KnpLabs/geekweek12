@@ -8,6 +8,7 @@
 {{ bootstrap_datatable(
     cheeses, 
     { 
+        bootstrap: 'Twitter_Bootstrap',
         fields: {
             name:   'Name', 
             region: 'Country / Region', 
@@ -26,7 +27,7 @@
                 parameters: { name: 'name' }
             },
             delete: {
-                path:       'app_cheeses_remove',
+                path:       'app_cheeses_delete',
                 label:      'Delete',
                 parameters: { name: 'name' }
             },

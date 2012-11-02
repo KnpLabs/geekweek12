@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Knp\RadBundle\DependencyInjection\Compiler;
+namespace spec\Knp\RadBundle\DependencyInjection\Definition;
 
 use PHPSpec2\ObjectBehavior;
 
-class RepositoryDefinitionFactory extends ObjectBehavior
+class DoctrineRepositoryFactory extends ObjectBehavior
 {
     function it_should_create_repository_definition_for_the_given_classe_name()
     {
