@@ -14,12 +14,12 @@ class ClassFinder extends ObjectBehavior
     function let($finder, $filesystem)
     {
         $this->beConstructedWith($finder, $filesystem);
-
-        $filesystem->exists('/my/project/src/App/Entity')->willReturn(true);
     }
 
-    function it_should_find_classes_from_specified_the_namespace_directory($finder)
+    function it_should_find_classes_from_specified_the_namespace_directory($finder, $filesystem)
     {
+        $filesystem->exists('/my/project/src/App/Entity')->willReturn(true);
+
         $finder->name('*.php')->shouldBeCalled();
         $finder->in('/my/project/src/App/Entity')->shouldBeCalled();
         $finder->getIterator()->willReturn(array(
@@ -41,7 +41,7 @@ class ClassFinder extends ObjectBehavior
 
     function it_should_return_empty_array_when_directory_does_not_exist($finder, $filesystem)
     {
-        $filesystem->exists('/my/project/src/App/Entity')[-1]->willReturn(false);
+        $filesystem->exists('/my/project/src/App/Entity')->willReturn(false);
 
         $finder->in(ANY_ARGUMENTS)->shouldNotBeCalled();
         $finder->getIterator()->shouldNotBeCalled();
@@ -49,8 +49,10 @@ class ClassFinder extends ObjectBehavior
         $this->findClasses('/my/project/src/App/Entity', 'App\Entity')->shouldReturn(array());
     }
 
-    function it_should_allow_to_filter_by_name_pattern($finder)
+    function it_should_allow_to_filter_by_name_pattern($finder, $filesystem)
     {
+        $filesystem->exists('/my/project/src/App/Entity')->willReturn(true);
+
         $finder->name('*.php')->shouldBeCalled();
         $finder->in('/my/project/src/App/Entity')->shouldBeCalled();
         $finder->getIterator()->willReturn(array(
