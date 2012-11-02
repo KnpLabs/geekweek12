@@ -1,13 +1,10 @@
 App:Cheeses:
     resources:
-        show: /{name}
-        edit: /{name}/edit
-        update: /{name}
+        show:    /{name}
+        edit:    /{name}/edit
+        update:  /{name}
 
-App:Cheeses:admin: /admin
-
+App:Cheeses:admin:       /admin
 App:Cheeses:indexRegion: /region/{region}
-
-App:Cheeses:indexMilk: /milk/{milk}
-
-App:Cheeses:rate: /cheeses/{name}/score/{score}
+App:Cheeses:indexMilk:   /milk/{milk}
+App:Cheeses:rate:        /cheeses/{name}/score/{score}
