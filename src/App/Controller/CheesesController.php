@@ -22,7 +22,7 @@ class CheesesController extends Controller
     public function newAction(Request $request)
     {
         $cheese = new Cheese();
-        $form   = $this->get('knp_rad.form.manager')->createFormFor($cheese);
+        $form   = $this->getFormFor($cheese);
 
         if ($request->getMethod() === 'POST') {
             $form->bind($request);
@@ -43,7 +43,7 @@ class CheesesController extends Controller
     public function editAction(Request $request, $name)
     {
         $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
-        $form   = $this->get('knp_rad.form.manager')->createFormFor($cheese, array(), new EditCheeseType);
+        $form   = $this->getFormFor($cheese);
 
         if ($request->getMethod() === 'PUT') {
             $form->bind($request);
