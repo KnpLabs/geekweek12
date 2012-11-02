@@ -58,4 +58,17 @@ class FormManager extends ObjectBehavior
 
         $this->createObjectForm($object, 'edit');
     }
+
+    /**
+     * @param stdClass $object
+     * @param Symfony\Component\HttpFoundation\Request $request
+     * @param Symfony\Component\Form\Form $form
+     */
+    function it_should_be_able_to_bind_form($object, $request, $form, $creator1)
+    {
+        $creator1->create($object, null, array())->willReturn($form)->shouldBeCalled();
+        $form->bind($request)->shouldBeCalled();
+
+        $this->createBoundObjectForm($object, $request);
+    }
 }
