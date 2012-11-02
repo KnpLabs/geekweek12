@@ -6,8 +6,30 @@
 
 {{ bootstrap_datatable(
     cheeses, 
-    { fields: 
-        {name: 'Name', region: 'Country / Region', milk: 'Type of milk', score: 'Rating'}
+    { 
+        fields: {
+            name:   'Name', 
+            region: 'Country / Region', 
+            milk:   'Type of milk', 
+            score:  'Rating'
+        },
+        routes: {
+            show: {
+                path:       'app_cheeses_show',
+                label:      'Show',
+                parameters: { name: 'name' }
+            },
+            edit: {
+                path:       'app_cheeses_edit',
+                label:      'Edit',
+                parameters: { name: 'name' }
+            },
+            delete: {
+                path:       'app_cheeses_remove',
+                label:      'Delete',
+                parameters: { name: 'name' }
+            },
+        }
     }
 ) }}
 
