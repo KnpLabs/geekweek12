@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 class CheeseRepository extends EntityRepository
 {
 
-    public function buildByRegion($region, QueryBuilder $qb = null)
+    public function buildAllByRegion($region, QueryBuilder $qb = null)
     {
         $qb = $qb === null ? $this->build() : $qb;
 
@@ -93,7 +93,7 @@ class CheeseRepository extends EntityRepository
     {
         $qb = $this->buildAllByRegion($region);
 
-        $qb = $sorted ? $this->getAllOrderByRating($qb) : $qb;
+        $qb = $sorted ? $this->buildAllOrderByRating($qb) : $qb;
         $qb = $limit === null ? $qb : $qb->setMaxResults($limit);
 
         return $qb
