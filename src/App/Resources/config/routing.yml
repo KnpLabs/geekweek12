@@ -3,6 +3,10 @@ App:Cheeses:
         show: /{name}
         edit: /{name}/edit
         update: /{name}
+        remove: 
+            pattern: /{name}/removed
+            requirements: { _method: 'GET' }
+        delete: /{name}
 
 App:Cheeses:admin: /admin
 

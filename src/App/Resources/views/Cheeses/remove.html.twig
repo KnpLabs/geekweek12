@@ -1,0 +1,21 @@
+{% extends 'App::base.html.twig' %}
+
+{% block content %}
+
+<h1>Delete cheese {{ cheese.name }}</h1>
+
+<form method="post" action="{{ path('app_cheeses_delete', {name: cheese.name}) }}" {{ form_enctype(form) }} >
+    {{ form_widget(form) }}
+
+    <input type="hidden" name="_method" value="DELETE" /> 
+    <div class="form-horizontal">
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" class="btn btn-danger" value="Yes" />
+                <a href="{{ path('app_cheeses_show', { name: cheese.name }) }}" class="btn btn-info">No</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
