@@ -86,8 +86,10 @@ class CheesesController extends Controller
         $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
 
         if ($request->getMethod() === 'DELETE') {
-            $this->removeAndFlush($cheese);
-            $this->setFlash('success', sprintf('Cheese %s deleted', $cheese->getName()), 'Successfully removed');
+            $this->remove($cheese, true);
+            $this->getFlashBag()->add('success', sprintf(
+                'Cheese %s deleted', $cheese->getName()
+            ));
 
         }
 
