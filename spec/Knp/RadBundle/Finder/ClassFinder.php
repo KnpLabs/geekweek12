@@ -16,7 +16,10 @@ class ClassFinder extends ObjectBehavior
         $this->beConstructedWith($finder, $filesystem);
 
         $filesystem->exists('/my/project/src/App/Entity')->willReturn(true);
+    }
 
+    function it_should_find_classes_from_specified_the_namespace_directory($finder)
+    {
         $finder->name('*.php')->shouldBeCalled();
         $finder->in('/my/project/src/App/Entity')->shouldBeCalled();
         $finder->getIterator()->willReturn(array(
@@ -26,10 +29,7 @@ class ClassFinder extends ObjectBehavior
             '/my/project/src/App/Entity/CustomerRepository.php',
             '/my/project/src/App/Entity/Customer/Address.php',
         ));
-    }
 
-    function it_should_find_classes_from_specified_the_namespace_directory()
-    {
         $this->findClasses('/my/project/src/App/Entity', 'App\Entity')->shouldReturn(array(
             'App\Entity\Cheese',
             'App\Entity\CheeseRepository',
@@ -43,13 +43,24 @@ class ClassFinder extends ObjectBehavior
     {
         $filesystem->exists('/my/project/src/App/Entity')[-1]->willReturn(false);
 
-        $finder->getIterator()[-1]->shouldNotBeCalled();
+        $finder->in(ANY_ARGUMENTS)->shouldNotBeCalled();
+        $finder->getIterator()->shouldNotBeCalled();
 
         $this->findClasses('/my/project/src/App/Entity', 'App\Entity')->shouldReturn(array());
     }
 
     function it_should_allow_to_filter_by_name_pattern($finder)
     {
+        $finder->name('*.php')->shouldBeCalled();
+        $finder->in('/my/project/src/App/Entity')->shouldBeCalled();
+        $finder->getIterator()->willReturn(array(
+            '/my/project/src/App/Entity/Cheese.php',
+            '/my/project/src/App/Entity/CheeseRepository.php',
+            '/my/project/src/App/Entity/Customer.php',
+            '/my/project/src/App/Entity/CustomerRepository.php',
+            '/my/project/src/App/Entity/Customer/Address.php',
+        ));
+
         $this->findClassesMatching('/my/project/src/App/Entity', 'App\Entity', '(?<!Repository)$')->shouldReturn(array(
             'App\Entity\Cheese',
             'App\Entity\Customer',
