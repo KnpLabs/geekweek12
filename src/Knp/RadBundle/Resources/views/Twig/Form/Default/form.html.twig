@@ -1,0 +1,13 @@
+<form method="{{ options.method }}" action="{{ path(path, options.parameters) }}" {{ form_enctype(form) }}>
+    {% if options._method is defined %}
+        <input type="hidden" name="_method" value="{{ options._method }}" />
+    {% endif %}
+    {{ form_widget(form) }}
+    {% if options.buttons is defined %}
+        {% for button in options.buttons %}
+            {% block button %}
+                
+            {% endblock %}
+        {% endfor %}
+    {% endif %}
+</form>

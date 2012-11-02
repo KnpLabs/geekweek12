@@ -15,8 +15,8 @@ class DataTableTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'bootstrap_datatable'       => new \Twig_Function_Method($this, 'getDataTableRender', array('is_safe' => array('html'))),
-            'bootstrap_datatable_row'   => new \Twig_Function_Method($this, 'getDataTableRowRender', array('is_safe' => array('html'))),
+            'bootstrap_datatable'     => new \Twig_Function_Method($this, 'getDataTableRender', array('is_safe' => array('html'))),
+            'bootstrap_datatable_row' => new \Twig_Function_Method($this, 'getDataTableRowRender', array('is_safe' => array('html'))),
         );
     }
 
@@ -30,7 +30,7 @@ class DataTableTwigExtension extends \Twig_Extension
 
     public function getDataTableRender($elements, $options = array())
     {
-        $options = array_merge(array('bootstrap' => "Default"), $options);
+        $options = array_merge(array('bootstrap' => 'Default'), $options);
 
         return $this
             ->container
@@ -44,7 +44,7 @@ class DataTableTwigExtension extends \Twig_Extension
 
     public function getDataTableRowRender($element, $headers, $options = array())
     {
-        $options = array_merge(array('bootstrap' => "Default"), $options);
+        $options = array_merge(array('bootstrap' => 'Default'), $options);
 
         $routes = isset($options['routes'])
             ? $options['routes']

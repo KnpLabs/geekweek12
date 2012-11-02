@@ -2,8 +2,27 @@
 
 {% block content %}
 
-<h1>Update a cheese</h1>
+<h1>Update the cheese {{ cheese.name }}</h1>
 
+{{ 
+    bootstrap_form(
+        form, 
+        'app_cheeses_show', 
+        {
+            parameters: {
+                name: cheese.name
+            },
+            buttons: {
+                submit: null,
+                reset:  null
+            }
+        }
+    )
+}}
+
+{{ bootstrap_button('TEST', { href: 'http://google.fr' })|raw }}
+
+{#
 <form action="{{ path('app_cheeses_update', {'name': cheese.name}) }}" {{ form_enctype(form) }} method="POST">
     <input type="hidden" name="_method" value="PUT" />
 
@@ -19,5 +38,6 @@
     </div>
 
 </form>
+#}
 
 {% endblock %}

@@ -1,0 +1,17 @@
+<{{ block('tag') }}
+    class="{{ options.class }}" 
+    {% if options.href is defined %}href="{{options.href}}"{% endif %}
+    {% if options.path is defined %}href="{{ path(options.path, options.parameters)}}"{% endif %}
+>
+    {{ content }}
+</{{ block('tag') }}>
+
+{% block tag %}
+    {% set tag = options.tag is defined ? options.tag : 'button' %}
+    {% if options.href is defined or options.path is defined %}
+        {% set tag = 'a' %}
+    {% else %}
+        {% set tag = 'button' %}
+    {% endif %}
+    {{- tag -}}
+{% endblock tag %}

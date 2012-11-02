@@ -15,6 +15,8 @@
 
         <parameter key="knp_rad.routing.loader.class">Knp\RadBundle\Routing\Loader\ConventionalLoader</parameter>
         <parameter key="knp_rad.twig.datatable.class">Knp\RadBundle\Twig\DataTableTwigExtension</parameter>
+        <parameter key="knp_rad.twig.form.class">Knp\RadBundle\Twig\FormTwigExtension</parameter>
+        <parameter key="knp_rad.twig.button.class">Knp\RadBundle\Twig\ButtonTwigExtension</parameter>
     </parameters>
 
     <services>
@@ -47,6 +49,14 @@
             <tag name="routing.loader" />
         </service>
         <service id="knp_rad.twig.datatable" class="%knp_rad.twig.datatable.class%">
+            <argument type="service" id="service_container" />
+            <tag name="twig.extension" />
+        </service>
+        <service id="knp_rad.twig.form" class="%knp_rad.twig.form.class%">
+            <argument type="service" id="service_container" />
+            <tag name="twig.extension" />
+        </service>
+        <service id="knp_rad.twig.button" class="%knp_rad.twig.button.class%">
             <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
