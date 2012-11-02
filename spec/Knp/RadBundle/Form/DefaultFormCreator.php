@@ -7,7 +7,7 @@ use PHPSpec2\ObjectBehavior;
 class DefaultFormCreator extends ObjectBehavior
 {
     /**
-     * @param Knp\RadBundle\Form\ClassMetadataFetcher $fetcher
+     * @param Knp\RadBundle\Reflection\ClassMetadataFetcher $fetcher
      * @param Symfony\Component\Form\FormFactoryInterface $factory
      */
     function let($fetcher, $factory)

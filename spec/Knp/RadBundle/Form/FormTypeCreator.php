@@ -7,7 +7,7 @@ use PHPSpec2\ObjectBehavior;
 class FormTypeCreator extends ObjectBehavior
 {
     /**
-     * @param Knp\RadBundle\Form\ClassMetadataFetcher $fetcher
+     * @param Knp\RadBundle\Reflection\ClassMetadataFetcher $fetcher
      */
     function let($fetcher)
     {
