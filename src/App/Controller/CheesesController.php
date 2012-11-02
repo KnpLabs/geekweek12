@@ -11,27 +11,31 @@ class CheesesController extends Controller
 {
     public function indexAction()
     {
-        return array('cheeses' => $this->getCheeseRepository()->findAll(true, 3));
+        return array('cheeses' => $this->getRepository('App:Cheese')->findAll(true, 3));
     }
 
     public function adminAction(Request $request)
     {
-        return array('cheeses' => $this->getCheeseRepository()->findAll());
+        return array('cheeses' => $this->getRepository('App:Cheese')->findAll());
     }
 
     public function newAction(Request $request)
     {
         $cheese = new Cheese();
-        $form   = $this->getFormFor($cheese);
+        $form   = $this->createObjectForm($cheese);
 
         if ($request->getMethod() === 'POST') {
             $form->bind($request);
 
             if ($form->isValid()) {
-                $this->persistAndFlush($cheese);
-                $this->setFlash('success', sprintf('Cheese %s created', $cheese->getName()), 'Successfully created');
+                $this->persist($cheese, true);
+                $this->getFlashBag->add('success', sprintf(
+                    'Cheese %s created', $cheese->getName()
+                ));
 
-                return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
+                return $this->redirectRoute('app_cheeses_show', array(
+                    'name' => $cheese->getName()
+                ));
             }
         }
 
@@ -42,17 +46,21 @@ class CheesesController extends Controller
 
     public function editAction(Request $request, $name)
     {
-        $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
-        $form   = $this->getFormFor($cheese);
+        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
+        $form   = $this->createObjectForm($cheese);
 
         if ($request->getMethod() === 'PUT') {
             $form->bind($request);
 
             if ($form->isValid()) {
-                $this->persistAndFlush($cheese);
-                $this->setFlash('success', sprintf('Cheese %s updated', $cheese->getName()), 'Successfully updated');
+                $this->persist($cheese, true);
+                $this->getFlashBag()->add('success', sprintf(
+                    'Cheese %s updated', $cheese->getName()
+                ));
 
-                return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
+                return $this->redirectRoute('app_cheeses_show', array(
+                    'name' => $cheese->getName()
+                ));
             }
         }
 
@@ -65,7 +73,7 @@ class CheesesController extends Controller
     public function indexRegionAction($region)
     {
         return array(
-            'cheeses' => $this->getCheeseRepository()->findAllByRegion($region, true, 3),
+            'cheeses' => $this->getRepository('App:Cheese')->findAllByRegion($region, true, 3),
             'region'  => $region,
         );
     }
@@ -73,43 +81,39 @@ class CheesesController extends Controller
     public function indexMilkAction($milk)
     {
         return array(
-            'cheeses' => $this->getCheeseRepository()->findAllByMilk($milk, true, 3),
+            'cheeses' => $this->getRepository('App:Cheese')->findAllByMilk($milk, true, 3),
             'milk'    => $milk,
         );
     }
 
     public function showAction($name)
     {
-        $cheese = $this->findEntityOr404('App\Entity\Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
 
         return array('cheese' => $cheese);
     }
 
     public function rateAction($name, $score)
     {
-        $cheese = $this->findEntityOr404('App\Entity\Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
         $cheese->rate($score);
-        $this->getEntityManager()->flush();
+
+        $this->flush();
 
         return $this->redirectRoute('app_cheeses_show', array('name' => $name));
     }
 
     public function listRegionAction()
     {
-        return $this->render('App:Cheeses:listRegion.html.twig', array(
-            'regions' => $this->getCheeseRepository()->findRegions(),
-        ));
+        return array(
+            'regions' => $this->getRepository('App:Cheese')->findRegions(),
+        );
     }
 
     public function listMilkAction()
     {
-        return $this->render('App:Cheeses:listMilk.html.twig', array(
-            'milks' => $this->getCheeseRepository()->findMilks(),
-        ));
-    }
-
-    protected function getCheeseRepository()
-    {
-        return $this->getRepository(new Cheese);
+        return array(
+            'milks' => $this->getRepository('App:Cheese')->findMilks(),
+        );
     }
 }
