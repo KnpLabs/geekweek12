@@ -10,7 +10,7 @@ class RegisterDoctrineRepositoriesPass extends ObjectBehavior
      * @param Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
      * @param Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param Knp\RadBundle\Finder\ClassFinder $classFinder
-     * @param Knp\RadBundle\DependencyInjection\Compiler\RepositoryDefinitionFactory $definitionFactory
+     * @param Knp\RadBundle\DependencyInjection\Definition\DoctrineRepositoryFactory $definitionFactory
      */
     function let($bundle, $container, $classFinder, $definitionFactory)
     {
