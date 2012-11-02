@@ -5,9 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * App\Entity\Wine
- *
- * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Entity\WineRepository")
  */
 class Wine

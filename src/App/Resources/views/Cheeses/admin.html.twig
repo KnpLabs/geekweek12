@@ -6,7 +6,9 @@
 
 {{ bootstrap_datatable(
     cheeses, 
-    {'name': 'Name', 'region': 'Country / Region', 'milk': 'Type of milk', 'score': 'Rating'}
+    { fields: 
+        {name: 'Name', region: 'Country / Region', milk: 'Type of milk', score: 'Rating'}
+    }
 ) }}
 
 {% endblock %}
