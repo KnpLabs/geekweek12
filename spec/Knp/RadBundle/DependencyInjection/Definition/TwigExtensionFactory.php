@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Knp\RadBundle\DependencyInjection\Compiler;
+namespace spec\Knp\RadBundle\DependencyInjection\Definition;
 
 use PHPSpec2\ObjectBehavior;
 
-class TwigExtensionServiceFactory extends ObjectBehavior
+class TwigExtensionFactory extends ObjectBehavior
 {
     /**
      * @param  Knp\RadBundle\Reflection\ReflectionFactory $reflectionFactory
