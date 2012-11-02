@@ -73,7 +73,7 @@ class CheesesController extends Controller
     public function removeAction($name)
     {
         $cheese = $this->findEntityOr404('App:Cheese', array('name' => $name));
-        $form   = $this->getFormFor($cheese, 'remove');
+        $form   = $this->createObjectForm($cheese, 'remove');
 
         return array(
             'cheese' => $cheese,
