@@ -49,7 +49,7 @@ class LoadCheeseData implements FixtureInterface
 
         $cheese = new Cheese();
         $cheese->setName('Munster');
-        $cheese->setRegion('Nord');
+        $cheese->setRegion('Alsace');
         $cheese->setMilk('Cow');
         $cheese->setTotalRating(12*3);
         $cheese->setTotalVote(12);
