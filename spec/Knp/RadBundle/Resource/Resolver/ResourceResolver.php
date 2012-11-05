@@ -43,6 +43,20 @@ class ResourceResolver extends ObjectBehavior
         ;
     }
 
+    function it_should_throw_resolution_failure_when_resolved_resource_is_null($request, $argumentResolver, $cheeseRepository)
+    {
+        $argumentResolver->resolveArgument($request, array('name' => 'slug'))->willReturn('neufchatel');
+        $cheeseRepository->findBySlug('neufchatel')->willReturn(null);
+
+        $this->shouldThrow()->duringResolveResource($request, array(
+            'service'   => 'orm.cheese_repository',
+            'method'    => 'findBySlug',
+            'arguments' => array(
+                array('name' => 'slug')
+            )
+        ));
+    }
+
     function it_should_throw_exception_when_resouce_has_extra_options($request)
     {
         $this->shouldThrow()->duringResolveResource($request, array(

@@ -25,4 +25,13 @@ class ResourceResolverListener extends ObjectBehavior
 
         $this->onKernelRequest($event);
     }
+
+    function it_should_transform_resource_resolution_failures_into_404_errors($event, $request, $requestResolver)
+    {
+        $event->getRequest()->shouldBeCalled()->willReturn($request);
+
+        $requestResolver->resolveRequest($request)->willThrow('Knp\RadBundle\Resource\Resolver\ResolutionFailureException');
+
+        $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')->duringOnKernelRequest($event);
+    }
 }
