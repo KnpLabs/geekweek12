@@ -1,5 +1,5 @@
 {
-    "hash": "362d6bb565537f55937c2af9d7052b27",
+    "hash": "c253ed5989109263903ea478afd0e473",
     "packages": [
         {
             "name": "doctrine/common",
@@ -87,7 +87,6 @@
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "1350901469",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -109,7 +108,8 @@
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
                 "database"
-            ]
+            ],
+            "time": "1350901469"
         },
         {
             "name": "doctrine/dbal",
@@ -263,7 +263,6 @@
                 "doctrine/doctrine-bundle": "1.0.*",
                 "symfony/doctrine-bridge": ">=2.1.0,<2.3-dev"
             },
-            "time": "1350914272",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -293,7 +292,8 @@
             "keywords": [
                 "persistence",
                 "Fixture"
-            ]
+            ],
+            "time": "1350914272"
         },
         {
             "name": "doctrine/orm",
@@ -505,7 +505,6 @@
             "require": {
                 "symfony/framework-bundle": "2.1.*"
             },
-            "time": "1347340208",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -531,7 +530,8 @@
             "keywords": [
                 "distribution",
                 "configuration"
-            ]
+            ],
+            "time": "1347340208"
         },
         {
             "name": "sensio/generator-bundle",
@@ -557,7 +557,6 @@
                 "doctrine/orm": ">=2.1,<2.4-dev",
                 "twig/twig": ">=1.8,<2.0-dev"
             },
-            "time": "1348030981",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -579,7 +578,8 @@
                     "email": "fabien@symfony.com"
                 }
             ],
-            "description": "This bundle generates code for you"
+            "description": "This bundle generates code for you",
+            "time": "1348030981"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1385,7 +1385,6 @@
                 "reference": "7efe41e227eae44f3ad443905957f9081cf05e3b",
                 "shasum": ""
             },
-            "time": "1348700435",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1398,31 +1397,33 @@
                     "name": "Chris Boulton"
                 }
             ],
-            "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays)."
+            "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
+            "time": "1348700435"
         },
         {
             "name": "phpspec/phpspec2",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec2.git",
-                "reference": "4eb75390b81363664d9e7519631cdb87c79fe23b"
+                "reference": "3f8faeca4bd4882724a8c35ce443be6e9ddc34ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/phpspec/phpspec2/zipball/4eb75390b81363664d9e7519631cdb87c79fe23b",
-                "reference": "4eb75390b81363664d9e7519631cdb87c79fe23b",
+                "url": "https://github.com/phpspec/phpspec2/archive/3f8faeca4bd4882724a8c35ce443be6e9ddc34ae.zip",
+                "reference": "3f8faeca4bd4882724a8c35ce443be6e9ddc34ae",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.1",
-                "mockery/mockery": "0.7.*",
                 "symfony/console": ">=2.1.0,<2.2.0",
                 "symfony/event-dispatcher": ">=2.1.0,<2.2.0",
                 "symfony/finder": ">=2.1.0,<2.2.0",
-                "phpspec/php-diff": "*@dev"
+                "mockery/mockery": "0.7.*",
+                "phpspec/php-diff": "*@dev",
+                "symfony/yaml": ">=2.1.0,<2.2.0"
             },
-            "time": "1351698370",
+            "time": "1352144869",
             "bin": [
                 "bin/phpspec"
             ],
@@ -1463,6 +1464,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/symfony": 0
+        "symfony/symfony": 0,
+        "phpspec/phpspec2": 20
     }
 }
