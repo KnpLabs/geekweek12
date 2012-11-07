@@ -1,12 +1,18 @@
-{% extends 'KnpRadBundle:Bootstrap:twitter_bootstrap.html.twig' %}
+{% extends '::base.html.twig' %}
+
+{% block title %}{% block subtitle %}{% endblock subtitle %} :: Cheeses{% endblock title %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-    {{ parent() }}
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
@@ -15,13 +21,19 @@
                     <ul class="nav">
                     {% block toolbar %}
                         <li class="">
-                            <a href="{{ path('app_cheeses_index') }}"><i class="icon-home"></i> Home</a>
+                            <a href="{{ path('app_cheeses_index') }}">
+                                <i class="icon-home"></i> Home
+                            </a>
                         </li>
                         <li class="">
-                            <a href="{{ path('app_cheeses_admin') }}"><i class="icon-wrench"></i> Administration</a>
+                            <a href="{{ path('app_cheeses_admin') }}">
+                                <i class="icon-wrench"></i> Administration
+                            </a>
                         </li>
                         <li class="">
-                            <a href="{{ path('app_cheeses_new') }}"><i class="icon-plus"></i> Add a new cheese</a>
+                            <a href="{{ path('app_cheeses_new') }}">
+                                <i class="icon-plus"></i> Add a new cheese
+                            </a>
                         </li>
                     {% endblock %}
                     </ul>
@@ -29,6 +41,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
             <div class="span2">
@@ -41,9 +54,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/js/app.js') }}"></script>
 {% endblock %}
