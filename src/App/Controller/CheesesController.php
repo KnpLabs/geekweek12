@@ -3,130 +3,106 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Knp\RadBundle\Controller\Controller;
 use App\Entity\Cheese;
-use App\Form\EditCheeseType;
 
 class CheesesController extends Controller
 {
     public function indexAction()
     {
-        return array('cheeses' => $this->getRepository('App:Cheese')->findAll(true, 3));
+        $cheeses = $this->getRepository('App:Cheese')->findAll(true, 3);
+
+        return ['cheeses' => $cheeses];
     }
 
     public function adminAction(Request $request)
     {
-        return array('cheeses' => $this->getRepository('App:Cheese')->findAll());
+        $cheeses = $this->getRepository('App:Cheese')->findAll();
+
+        return ['cheeses' => $cheeses];
     }
 
     public function newAction(Request $request)
     {
         $cheese = new Cheese();
-        $form   = $this->createObjectForm($cheese);
+        $form   = $this->createObjectForm($cheese, 'new');
 
-        if ($request->getMethod() === 'POST') {
-            $form->bind($request);
+        if ('POST' === $request->getMethod() && $form->bind($request)->isValid()) {
+            $this->persist($cheese, true);
+            $this->addFlashf('success', 'Cheese "%s" created.', $cheese->getName());
 
-            if ($form->isValid()) {
-                $this->persist($cheese, true);
-                $this->getFlashBag()->add('success', sprintf(
-                    'Cheese %s created', $cheese->getName()
-                ));
-
-                return $this->redirectRoute('app_cheeses_show', array(
-                    'name' => $cheese->getName()
-                ));
-            }
+            return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
         }
 
-        return array(
-            'form' => $form->createView(),
-        );
+        return ['form' => $form->createView()];
     }
 
     public function editAction(Request $request, $name)
     {
-        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
         $form   = $this->createObjectForm($cheese, 'edit');
 
-        if ($request->getMethod() === 'PUT') {
-            $form->bind($request);
+        if ('PUT' === $request->getMethod() && $form->bind($request)->isValid()) {
+            $this->persist($cheese, true);
+            $this->addFlashf('success', 'Cheese "%s" updated.', $cheese->getName());
 
-            if ($form->isValid()) {
-                $this->persist($cheese, true);
-                $this->getFlashBag()->add('success', sprintf(
-                    'Cheese %s updated', $cheese->getName()
-                ));
-
-                return $this->redirectRoute('app_cheeses_show', array(
-                    'name' => $cheese->getName()
-                ));
-            }
+            return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
         }
 
-        return array(
-            'cheese' => $cheese,
-            'form'   => $form->createView(),
-        );
+        return ['cheese' => $cheese, 'form' => $form->createView()];
     }
 
     public function deleteAction(Request $request, $name)
     {
-        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
 
-        if ($request->getMethod() === 'DELETE') {
-            $this->remove($cheese, true);
-            $this->getFlashBag()->add('success', 'Cheese deleted');
-
-        }
+        $this->remove($cheese, true);
+        $this->addFlashf('success', 'Cheese "%s" deleted.', $cheese->getName());
 
         return $this->redirectRoute('app_cheeses_index');
     }
 
     public function indexRegionAction($region)
     {
-        return array(
-            'cheeses' => $this->getRepository('App:Cheese')->findAllByRegion($region, true, 3),
-            'region'  => $region,
-        );
+        $cheeses = $this->getRepository('App:Cheese')->findAllByRegion($region, true, 3);
+
+        return ['cheeses' => $cheeses, 'region' => $region];
     }
 
     public function indexMilkAction($milk)
     {
-        return array(
-            'cheeses' => $this->getRepository('App:Cheese')->findAllByMilk($milk, true, 3),
-            'milk'    => $milk,
-        );
+        $cheeses = $this->getRepository('App:Cheese')->findAllByMilk($milk, true, 3);
+
+        return ['cheeses' => $cheeses, 'milk' => $milk];
     }
 
     public function showAction($name)
     {
-        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
 
-        return array('cheese' => $cheese);
+        return ['cheese' => $cheese];
     }
 
     public function rateAction($name, $score)
     {
-        $cheese = $this->findOr404('App:Cheese', array('name' => $name));
+        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
         $cheese->rate($score);
 
         $this->flush();
 
-        return $this->redirectRoute('app_cheeses_show', array('name' => $name));
+        return $this->redirectRoute('app_cheeses_show', ['name' => $name]);
     }
 
     public function listRegionAction()
     {
-        return array(
-            'regions' => $this->getRepository('App:Cheese')->findAllRegion(),
-        );
+        $regions = $this->getRepository('App:Cheese')->findAllRegion();
+
+        return ['regions' => $regions];
     }
 
     public function listMilkAction()
     {
-        return array(
-            'milks' => $this->getRepository('App:Cheese')->findAllMilk(),
-        );
+        $milk = $this->getRepository('App:Cheese')->findAllMilk();
+
+        return ['milks' => $milk];
     }
 }
