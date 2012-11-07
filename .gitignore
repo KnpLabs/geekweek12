@@ -1,4 +1,3 @@
-app/*\.db
 app/*\.cache
 vendor/*
 web/bundles/*
@@ -8,4 +7,3 @@ app/cache/*
 app/logs/*
 bin/*
 *tags
-src/App/Resources/public/img/cheeses/*
