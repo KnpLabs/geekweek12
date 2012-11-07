@@ -8,12 +8,15 @@ use PHPSpec2\Exception\Example\PendingException;
 class FormManager extends ObjectBehavior
 {
     /**
+     * @param Symfony\Component\HttpFoundation\Request $request
      * @param Knp\RadBundle\Form\FormCreatorInterface $creator1
      * @param Knp\RadBundle\Form\FormCreatorInterface $creator2
      * @param Knp\RadBundle\Form\FormCreatorInterface $creator3
      */
-    public function let($creator1, $creator2, $creator3)
+    function let($request, $creator1, $creator2, $creator3)
     {
+        $this->beConstructedWith($request);
+
         $this->registerCreator($creator1);
         $this->registerCreator($creator2);
         $this->registerCreator($creator3);
@@ -61,14 +64,27 @@ class FormManager extends ObjectBehavior
 
     /**
      * @param stdClass $object
-     * @param Symfony\Component\HttpFoundation\Request $request
      * @param Symfony\Component\Form\Form $form
      */
-    function it_should_be_able_to_bind_form($object, $request, $form, $creator1)
+    function it_should_be_able_to_bind_unsafe_requests($object, $request, $form, $creator1)
     {
+        $request->isMethodSafe()->willReturn(false);
         $creator1->create($object, null, array())->willReturn($form)->shouldBeCalled();
         $form->bind($request)->shouldBeCalled();
 
-        $this->createBoundObjectForm($object, $request);
+        $this->createBoundObjectForm($object);
+    }
+
+    /**
+     * @param stdClass $object
+     * @param Symfony\Component\Form\Form $form
+     */
+    function it_should_not_bind_get_safe_requests($object, $request, $form, $creator1)
+    {
+        $request->isMethodSafe()->willReturn(true);
+        $creator1->create($object, null, array())->willReturn($form)->shouldBeCalled();
+        $form->bind($request)->shouldNotBeCalled();
+
+        $this->createBoundObjectForm($object);
     }
 }

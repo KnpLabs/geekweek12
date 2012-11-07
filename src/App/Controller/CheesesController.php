@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
 use App\Entity\Cheese;
 
 class CheesesController extends Controller
@@ -21,12 +22,9 @@ class CheesesController extends Controller
         return ['cheeses' => $cheeses];
     }
 
-    public function newAction(Request $request)
+    public function newAction(Cheese $cheese, Form $form)
     {
-        $cheese = new Cheese();
-        $form   = $this->createObjectForm($cheese, 'new');
-
-        if ('POST' === $request->getMethod() && $form->bind($request)->isValid()) {
+        if ($form->isBound()) {
             $this->persist($cheese, true);
             $this->addFlashf('success', 'Cheese "%s" created.', $cheese->getName());
 
@@ -36,12 +34,9 @@ class CheesesController extends Controller
         return ['form' => $form->createView()];
     }
 
-    public function editAction(Request $request, $name)
+    public function editAction(Cheese $cheese, Form $form)
     {
-        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
-        $form   = $this->createObjectForm($cheese, 'edit');
-
-        if ('PUT' === $request->getMethod() && $form->bind($request)->isValid()) {
+        if ($form->isBound()) {
             $this->persist($cheese, true);
             $this->addFlashf('success', 'Cheese "%s" updated.', $cheese->getName());
 
@@ -51,14 +46,25 @@ class CheesesController extends Controller
         return ['cheese' => $cheese, 'form' => $form->createView()];
     }
 
-    public function deleteAction(Request $request, $name)
+    public function deleteAction(Cheese $cheese)
     {
-        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
-
         $this->remove($cheese, true);
         $this->addFlashf('success', 'Cheese "%s" deleted.', $cheese->getName());
 
         return $this->redirectRoute('app_cheeses_index');
+    }
+
+    public function showAction(Cheese $cheese)
+    {
+        return ['cheese' => $cheese];
+    }
+
+    public function rateAction(Cheese $cheese, $score)
+    {
+        $cheese->rate($score);
+        $this->flush();
+
+        return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
     }
 
     public function indexRegionAction($region)
@@ -73,23 +79,6 @@ class CheesesController extends Controller
         $cheeses = $this->getRepository('App:Cheese')->findAllByMilk($milk, true, 3);
 
         return ['cheeses' => $cheeses, 'milk' => $milk];
-    }
-
-    public function showAction($name)
-    {
-        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
-
-        return ['cheese' => $cheese];
-    }
-
-    public function rateAction($name, $score)
-    {
-        $cheese = $this->findOr404('App:Cheese', ['name' => $name]);
-        $cheese->rate($score);
-
-        $this->flush();
-
-        return $this->redirectRoute('app_cheeses_show', ['name' => $name]);
     }
 
     public function listRegionAction()

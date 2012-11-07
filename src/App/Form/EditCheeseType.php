@@ -13,11 +13,6 @@ class EditCheeseType extends AbstractType
         $builder
             ->add('name')
             ->add('tasted')
-            ->add('choice', 'choice', array(
-                'choices' => array('one' => 'one', 'two' => 'two'),
-                'mapped'  => false,
-                'expanded' => true
-            ))
         ;
     }
 

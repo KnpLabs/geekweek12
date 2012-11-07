@@ -1,5 +1,24 @@
 App:Cheeses:
+    collections:
+        defaults:
+            _resources:
+                cheese: { service: orm.cheese_repository, method: createNew }
+                form:
+                    service:    knp_rad.form.manager
+                    method:     createBoundObjectForm
+                    arguments:  [{ name: cheese }, { value: 'new' }]
     resources:
+        defaults:
+            _resources:
+                cheese:
+                    service:    orm.cheese_repository
+                    method:     findOneByName
+                    arguments:  [{ name: name }]
+                form:
+                    service:    knp_rad.form.manager
+                    method:     createBoundObjectForm
+                    arguments:  [{ name: cheese }, { value: 'edit' }]
+
         show:    /{name}
         edit:    /{name}/edit
         update:  /{name}

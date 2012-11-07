@@ -8,6 +8,10 @@ use Doctrine\ORM\QueryBuilder;
 
 class CheeseRepository extends EntityRepository
 {
+    public function createNew()
+    {
+        return new Cheese();
+    }
 
     public function buildAllByRegion($region, QueryBuilder $qb = null)
     {
