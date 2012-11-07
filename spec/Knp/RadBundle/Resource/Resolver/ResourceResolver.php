@@ -23,7 +23,7 @@ class ResourceResolver extends ObjectBehavior
      * @param stdObject $cheese
      * @param stdObject $repository
      */
-    function it_should_resolve_attributes($request, $argumentResolver, $container, $cheese, $cheeseRepository)
+    function it_should_resolve_resource($request, $argumentResolver, $container, $cheese, $cheeseRepository)
     {
         $argumentResolver->resolveArgument($request, array('value' => 'normandie'))->willReturn('normandie');
         $argumentResolver->resolveArgument($request, array('name' => 'slug'))->willReturn('neufchatel');
