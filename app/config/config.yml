@@ -48,7 +48,7 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
-        path:     "/tmp/cheese.db"
+        path:     %kernel.root_dir%/sqlite.db
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%

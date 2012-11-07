@@ -2,7 +2,7 @@ parameters:
     database_driver:   pdo_sqlite
     database_host:     localhost
     database_port:     ~
-    database_name:     cheese_factory
+    database_name:     cheeses
     database_user:     root
     database_password: ~
 

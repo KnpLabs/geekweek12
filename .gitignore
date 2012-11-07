@@ -1,3 +1,4 @@
+app/*\.db
 app/*\.cache
 vendor/*
 web/bundles/*
