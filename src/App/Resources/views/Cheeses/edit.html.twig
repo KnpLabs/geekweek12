@@ -4,7 +4,7 @@
 
 <h1>Update a cheese</h1>
 
-<form action="{{ path('app_cheeses_update', {'name': cheese.name}) }}" {{ form_enctype(form) }} method="POST">
+<form action="{{ path('app_cheeses_update', {'name': cheese.name}) }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
     <input type="hidden" name="_method" value="PUT" />
 
     {{ form_widget(form) }}

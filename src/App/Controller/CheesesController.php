@@ -47,7 +47,7 @@ class CheesesController extends Controller
     public function editAction(Request $request, $name)
     {
         $cheese = $this->findOr404('App:Cheese', array('name' => $name));
-        $form   = $this->createObjectForm($cheese);
+        $form   = $this->createObjectForm($cheese, 'edit');
 
         if ($request->getMethod() === 'PUT') {
             $form->bind($request);

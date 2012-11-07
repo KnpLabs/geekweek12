@@ -15,7 +15,10 @@
         "symfony/swiftmailer-bundle": "2.1.*",
         "symfony/monolog-bundle": "2.1.*",
         "sensio/distribution-bundle": "2.1.*",
-        "sensio/generator-bundle": "2.1.*"
+        "sensio/generator-bundle": "2.1.*",
+        "mopa/bootstrap-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "knplabs/knp-menu-bundle": "dev-master"
     },
     "require-dev": {
         "behat/behat": "2.4.*",

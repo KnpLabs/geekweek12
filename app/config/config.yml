@@ -21,15 +21,12 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    form:
-        resources:
-            - 'KnpRadBundle:Form:Bootstrap/twitter_bootstrap.html.twig'
 
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ App, KnpRadBundle ]
+    bundles:        [ App, KnpRadBundle, MopaBootstrapBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
