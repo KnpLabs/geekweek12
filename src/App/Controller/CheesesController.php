@@ -12,14 +12,14 @@ class CheesesController extends Controller
     {
         $cheeses = $this->getRepository('App:Cheese')->findAll(true, 3);
 
-        return ['cheeses' => $cheeses];
+        return array('cheeses' => $cheeses);
     }
 
-    public function adminAction(Request $request)
+    public function adminAction()
     {
         $cheeses = $this->getRepository('App:Cheese')->findAll();
 
-        return ['cheeses' => $cheeses];
+        return array('cheeses' => $cheeses);
     }
 
     public function newAction(Cheese $cheese, Form $form)
@@ -28,10 +28,10 @@ class CheesesController extends Controller
             $this->persist($cheese, true);
             $this->addFlashf('success', 'Cheese "%s" created.', $cheese->getName());
 
-            return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
+            return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
         }
 
-        return ['form' => $form->createView()];
+        return array('form' => $form->createView());
     }
 
     public function editAction(Cheese $cheese, Form $form)
@@ -40,10 +40,10 @@ class CheesesController extends Controller
             $this->persist($cheese, true);
             $this->addFlashf('success', 'Cheese "%s" updated.', $cheese->getName());
 
-            return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
+            return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
         }
 
-        return ['cheese' => $cheese, 'form' => $form->createView()];
+        return array('cheese' => $cheese, 'form' => $form->createView());
     }
 
     public function deleteAction(Cheese $cheese)
@@ -56,7 +56,7 @@ class CheesesController extends Controller
 
     public function showAction(Cheese $cheese)
     {
-        return ['cheese' => $cheese];
+        return array('cheese' => $cheese);
     }
 
     public function rateAction(Cheese $cheese, $score)
@@ -64,34 +64,34 @@ class CheesesController extends Controller
         $cheese->rate($score);
         $this->flush();
 
-        return $this->redirectRoute('app_cheeses_show', ['name' => $cheese->getName()]);
+        return $this->redirectRoute('app_cheeses_show', array('name' => $cheese->getName()));
     }
 
     public function indexRegionAction($region)
     {
         $cheeses = $this->getRepository('App:Cheese')->findAllByRegion($region, true, 3);
 
-        return ['cheeses' => $cheeses, 'region' => $region];
+        return array('cheeses' => $cheeses, 'region' => $region);
     }
 
     public function indexMilkAction($milk)
     {
         $cheeses = $this->getRepository('App:Cheese')->findAllByMilk($milk, true, 3);
 
-        return ['cheeses' => $cheeses, 'milk' => $milk];
+        return array('cheeses' => $cheeses, 'milk' => $milk);
     }
 
     public function listRegionAction()
     {
         $regions = $this->getRepository('App:Cheese')->findAllRegion();
 
-        return ['regions' => $regions];
+        return array('regions' => $regions);
     }
 
     public function listMilkAction()
     {
         $milk = $this->getRepository('App:Cheese')->findAllMilk();
 
-        return ['milks' => $milk];
+        return array('milks' => $milk);
     }
 }
