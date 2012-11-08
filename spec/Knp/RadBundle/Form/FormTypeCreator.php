@@ -67,6 +67,37 @@ class FormTypeCreator extends ObjectBehavior
      * @param stdClass $formType
      * @param Symfony\Component\Form\Form $form
      */
+    function it_should_fallback_on_default_form_type_if_given_purpose_has_no_associated_form_type($object, $fetcher, $factory, $formType, $form)
+    {
+        $fetcher->getClass($object)->willReturn('App\Entity\Cheese');
+        $fetcher->classExists('App\Form\EditCheeseType')->willReturn(false);
+        $fetcher->classExists('App\Form\CheeseType')->willReturn(true);
+        $fetcher->newInstance('App\Form\CheeseType')->shouldBeCalled()->willReturn($formType);
+        $factory->create($formType, $object, array())->shouldBeCalled()->willReturn($form);
+
+        $this->create($object, 'edit')->shouldReturn($form);
+    }
+
+    /**
+     * @param stdClass $object
+     * @param stdClass $formType
+     * @param Symfony\Component\Form\Form $form
+     */
+    function it_should_return_null_if_given_purpose_has_no_associated_form_type_and_no_default_form_type($object, $fetcher, $factory, $formType, $form)
+    {
+        $fetcher->getClass($object)->willReturn('App\Entity\Cheese');
+        $fetcher->getParentClass('App\Entity\Cheese')->willReturn(null);
+        $fetcher->classExists('App\Form\CheeseType')->willReturn(false);
+        $fetcher->classExists('App\Form\EditCheeseType')->willReturn(false);
+
+        $this->create($object, 'edit')->shouldReturn(null);
+    }
+
+    /**
+     * @param stdClass $object
+     * @param stdClass $formType
+     * @param Symfony\Component\Form\Form $form
+     */
     function it_should_return_parent_form_type_if_no_current_found($object, $fetcher, $factory, $formType, $form)
     {
         $fetcher->getClass($object)->willReturn('App\Entity\Roquefort');
