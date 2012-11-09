@@ -25,6 +25,6 @@ class EditCheeseType extends AbstractType
 
     public function getName()
     {
-        return 'app_cheeseedittype';
+        return 'app_form_edit_cheese_type';
     }
 }
