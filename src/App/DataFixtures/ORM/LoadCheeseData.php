@@ -15,12 +15,13 @@ class LoadCheeseData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->createObjectFactory($manager,  'App\Entity\Cheese')
-            ->add(['name' => 'Camembert',    'region' => 'Normandie',  'milk' => 'Cow',   'totalRating' => 12*5,  'totalVote' => 12])
-            ->add(['name' => 'Gruyère',      'region' => 'Suisse',     'milk' => 'Cow',   'totalRating' => 12*2,  'totalVote' => 12])
-            ->add(['name' => 'Maroilles',    'region' => 'Nord',       'milk' => 'Cow',   'totalRating' => 12*2,  'totalVote' => 12])
-            ->add(['name' => 'Munster',      'region' => 'Alsace',     'milk' => 'Cow',   'totalRating' => 12*3,  'totalVote' => 12])
-            ->add(['name' => 'Ossau-Iraty',  'region' => 'Pyrénées',   'milk' => 'Goat',  'totalRating' => 12*5,  'totalVote' => 12])
-            ->add(['name' => 'Roquefort',    'region' => 'Aveyron',    'milk' => 'Goat',  'totalRating' => 12*1,  'totalVote' => 12])
+            ->setDefaults(['totalVote' => 12])
+            ->add(['name' => 'Camembert',    'region' => 'Normandie',  'milk' => 'Cow',   'totalRating' => 12*5])
+            ->add(['name' => 'Gruyère',      'region' => 'Suisse',     'milk' => 'Cow',   'totalRating' => 12*2])
+            ->add(['name' => 'Maroilles',    'region' => 'Nord',       'milk' => 'Cow',   'totalRating' => 12*2])
+            ->add(['name' => 'Munster',      'region' => 'Alsace',     'milk' => 'Cow',   'totalRating' => 12*3])
+            ->add(['name' => 'Ossau-Iraty',  'region' => 'Pyrénées',   'milk' => 'Goat',  'totalRating' => 12*5])
+            ->add(['name' => 'Roquefort',    'region' => 'Aveyron',    'milk' => 'Goat',  'totalRating' => 12*1])
         ;
 
         $manager->flush();
