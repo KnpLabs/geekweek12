@@ -2,101 +2,53 @@
 
 namespace App\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Cheese;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
-class LoadCheeseData implements FixtureInterface
-{
+use App\Entity\Cheese;
+use Knp\RadBundle\DataFixtures\AbstractFixture;
 
+class LoadCheeseData extends AbstractFixture implements OrderedFixtureInterface
+{
     public function load(ObjectManager $manager)
     {
+        $this->createObjectFactory($manager,  'App\Entity\Cheese')
+            ->add(['name' => 'Camembert',    'region' => 'Normandie',  'milk' => 'Cow',   'totalRating' => 12*5,  'totalVote' => 12])
+            ->add(['name' => 'Gruyère',      'region' => 'Suisse',     'milk' => 'Cow',   'totalRating' => 12*2,  'totalVote' => 12])
+            ->add(['name' => 'Maroilles',    'region' => 'Nord',       'milk' => 'Cow',   'totalRating' => 12*2,  'totalVote' => 12])
+            ->add(['name' => 'Munster',      'region' => 'Alsace',     'milk' => 'Cow',   'totalRating' => 12*3,  'totalVote' => 12])
+            ->add(['name' => 'Ossau-Iraty',  'region' => 'Pyrénées',   'milk' => 'Goat',  'totalRating' => 12*5,  'totalVote' => 12])
+            ->add(['name' => 'Roquefort',    'region' => 'Aveyron',    'milk' => 'Goat',  'totalRating' => 12*1,  'totalVote' => 12])
+        ;
 
-        $cheese = new Cheese();
-        $cheese->setName('Camembert');
-        $cheese->setRegion('Normandie');
-        $cheese->setMilk('Cow');
-        $cheese->setTotalRating(12*5);
-        $cheese->setTotalVote(12);
-
-        $manager->persist($cheese);
         $manager->flush();
-        $this->moveAsset($cheese);
 
-        $cheese = new Cheese();
-        $cheese->setName('Gruyère');
-        $cheese->setRegion('Suisse');
-        $cheese->setMilk('Cow');
-        $cheese->setTotalRating(12*2);
-        $cheese->setTotalVote(12);
+        $this->moveAsset($this->getReference('Cheese:Camembert'));
+        $this->moveAsset($this->getReference('Cheese:Gruyère'));
+        $this->moveAsset($this->getReference('Cheese:Maroilles'));
+        $this->moveAsset($this->getReference('Cheese:Munster'));
+        $this->moveAsset($this->getReference('Cheese:Ossau-Iraty'));
+        $this->moveAsset($this->getReference('Cheese:Roquefort'));
+    }
 
-        $manager->persist($cheese);
-        $manager->flush();
-        $this->moveAsset($cheese);
-
-        $cheese = new Cheese();
-        $cheese->setName('Maroilles');
-        $cheese->setRegion('Nord');
-        $cheese->setMilk('Cow');
-        $cheese->setTotalRating(12*2);
-        $cheese->setTotalVote(12);
-
-        $manager->persist($cheese);
-        $manager->flush();
-        $this->moveAsset($cheese);
-
-        $cheese = new Cheese();
-        $cheese->setName('Munster');
-        $cheese->setRegion('Alsace');
-        $cheese->setMilk('Cow');
-        $cheese->setTotalRating(12*3);
-        $cheese->setTotalVote(12);
-
-        $manager->persist($cheese);
-        $manager->flush();
-        $this->moveAsset($cheese);
-
-        $cheese = new Cheese();
-        $cheese->setName('Ossau-Iraty');
-        $cheese->setRegion('Pyrénées');
-        $cheese->setMilk('Goat');
-        $cheese->setTotalRating(12*5);
-        $cheese->setTotalVote(12);
-
-        $manager->persist($cheese);
-        $manager->flush();
-        $this->moveAsset($cheese);
-
-        $cheese = new Cheese();
-        $cheese->setName('Roquefort');
-        $cheese->setRegion('Aveyron');
-        $cheese->setMilk('Goat');
-        $cheese->setTotalRating(12*1);
-        $cheese->setTotalVote(12);
-
-        $manager->persist($cheese);
-        $manager->flush();
-        $this->moveAsset($cheese);
-
+    public function getOrder()
+    {
+        return 10;
     }
 
     private function moveAsset(Cheese $cheese)
     {
         $fs = new Filesystem();
 
+        $source = sprintf('%s/../Resources/%s.jpg', __DIR__, $cheese->getSluggedName());
+        $target = sprintf('%s/../../Resources/public/img/cheeses/%s.jpg', __DIR__, $cheese->getId());
 
-        $source = sprintf('%s/../Resources/%s.jpg', dirname(__FILE__), $cheese->getSluggedName());
-        $target = sprintf('%s/../../Resources/public/img/cheeses/%s.jpg', dirname(__FILE__), $cheese->getId());
-
-        if($fs->exists($source)){
-            $fs->copy($source, $target, true);
-            return;
+        if ($fs->exists($source)) {
+            return $fs->copy($source, $target, true);
         }
 
         throw new \Exception(sprintf("File '%s' doesn't exists.", $source));
-        
-
     }
 }
