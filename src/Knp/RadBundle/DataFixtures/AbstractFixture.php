@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\DataFixtures;
+namespace Knp\RadBundle\DataFixtures;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture as BaseAbstractFixture;

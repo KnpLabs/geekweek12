@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Knp\DataFixtures;
+namespace spec\Knp\RadBundle\DataFixtures;
 
 use PHPSpec2\ObjectBehavior;
 
