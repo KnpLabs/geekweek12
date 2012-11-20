@@ -18,7 +18,7 @@ class ReferenceManipulator extends ObjectBehavior
     {
         $referenceRepository->hasReference('Cheese:Camembert')->shouldBeCalled()->willReturn(false);
 
-        $this->createReferenceName('App\Entity\Cheese', ['name' => 'Camembert', 'region' => 'Normandie'])->shouldReturn('Cheese:Camembert');
+        $this->createReferenceName('App\Entity\Cheese', array('name' => 'Camembert', 'region' => 'Normandie'))->shouldReturn('Cheese:Camembert');
     }
 
     function it_should_generate_an_incremented_alternative_reference_name_if_default_one_already_exists($referenceRepository)
@@ -27,14 +27,14 @@ class ReferenceManipulator extends ObjectBehavior
         $referenceRepository->hasReference('Cheese:Camembert-1')->shouldBeCalled()->willReturn(true);
         $referenceRepository->hasReference('Cheese:Camembert-2')->shouldBeCalled()->willReturn(false);
 
-        $this->createReferenceName('App\Entity\Cheese', ['name' => 'Camembert', 'region' => 'Normandie'])->shouldReturn('Cheese:Camembert-2');
+        $this->createReferenceName('App\Entity\Cheese', array('name' => 'Camembert', 'region' => 'Normandie'))->shouldReturn('Cheese:Camembert-2');
     }
 
     function it_should_generate_an_alternative_reference_name_if_no_attributes_were_given($referenceRepository)
     {
         $referenceRepository->hasReference('Cheese')->shouldBeCalled()->willReturn(false);
 
-        $this->createReferenceName('App\Entity\Cheese', [])->shouldReturn('Cheese');
+        $this->createReferenceName('App\Entity\Cheese', array())->shouldReturn('Cheese');
     }
 
     function it_should_generate_an_incremented_alternative_reference_name_if_no_attributes_were_given($referenceRepository)
@@ -43,6 +43,6 @@ class ReferenceManipulator extends ObjectBehavior
         $referenceRepository->hasReference('Cheese:1')->shouldBeCalled()->willReturn(true);
         $referenceRepository->hasReference('Cheese:2')->shouldBeCalled()->willReturn(false);
 
-        $this->createReferenceName('App\Entity\Cheese', [])->shouldReturn('Cheese:2');
+        $this->createReferenceName('App\Entity\Cheese', array())->shouldReturn('Cheese:2');
     }
 }
