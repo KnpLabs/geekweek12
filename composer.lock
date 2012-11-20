@@ -1,5 +1,5 @@
 {
-    "hash": "1409572634973b8296bbb5a048e28743",
+    "hash": "8b26580a7746985a38723d746d78e19b",
     "packages": [
         {
             "name": "doctrine/common",
@@ -76,18 +76,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "a95d7839a7794c7c9b22d64e859ee70658d977fe"
+                "reference": "98e059213cd8bf70f1203a3c9acc3c7e8afc2c89"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/doctrine/data-fixtures/archive/a95d7839a7794c7c9b22d64e859ee70658d977fe.zip",
-                "reference": "a95d7839a7794c7c9b22d64e859ee70658d977fe",
+                "reference": "98e059213cd8bf70f1203a3c9acc3c7e8afc2c89",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "1351735543",
+            "time": "1353423624",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -253,7 +253,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineFixturesBundle/zipball/9edc67af16e736a31605e7fa9c9e3edbd9db6427",
+                "url": "https://github.com/doctrine/DoctrineFixturesBundle/archive/9edc67af16e736a31605e7fa9c9e3edbd9db6427.zip",
                 "reference": "9edc67af16e736a31605e7fa9c9e3edbd9db6427",
                 "shasum": ""
             },
@@ -263,6 +263,7 @@
                 "doctrine/doctrine-bundle": "1.0.*",
                 "symfony/doctrine-bridge": ">=2.1.0,<2.3-dev"
             },
+            "time": "1350914272",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -292,8 +293,7 @@
             "keywords": [
                 "persistence",
                 "Fixture"
-            ],
-            "time": "1350914272"
+            ]
         },
         {
             "name": "doctrine/orm",
@@ -382,7 +382,6 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "1339767068",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -411,7 +410,8 @@
                 "knp",
                 "knplabs",
                 "paginator"
-            ]
+            ],
+            "time": "1339767068"
         },
         {
             "name": "knplabs/knp-menu",
@@ -440,7 +440,6 @@
                 "silex/silex": "for the integration with your silex application",
                 "twig/twig": "for the TwigRenderer and the integration with your templates"
             },
-            "time": "1350747764",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -475,7 +474,8 @@
             "keywords": [
                 "menu",
                 "tree"
-            ]
+            ],
+            "time": "1350747764"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -496,7 +496,6 @@
                 "knplabs/knp-menu": "2.0.*",
                 "symfony/framework-bundle": ">=2.0,<2.3-dev"
             },
-            "time": "1351767907",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -529,7 +528,8 @@
             "description": "This bundle provides an integration of the KnpMenu library",
             "keywords": [
                 "menu"
-            ]
+            ],
+            "time": "1351767907"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -552,7 +552,6 @@
                 "knplabs/knp-components": ">=1.1",
                 "twig/twig": ">=1.5"
             },
-            "time": "1352115261",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -583,7 +582,8 @@
                 "paginator",
                 "pagination",
                 "bundle"
-            ]
+            ],
+            "time": "1352115261"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -617,7 +617,6 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "1352285252",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -649,7 +648,8 @@
                 "assets",
                 "compression",
                 "minification"
-            ]
+            ],
+            "time": "1352285252"
         },
         {
             "name": "monolog/monolog",
@@ -676,7 +676,6 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server"
             },
-            "time": "1352047076",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -705,7 +704,8 @@
             "keywords": [
                 "log",
                 "logging"
-            ]
+            ],
+            "time": "1352047076"
         },
         {
             "name": "mopa/bootstrap-bundle",
@@ -733,7 +733,6 @@
                 "knplabs/knp-menu-bundle": "1.1.*",
                 "thomas-mcdonald/bootstrap-sass": "dev-master"
             },
-            "time": "1352191925",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -767,7 +766,8 @@
                 "bootstrap",
                 "bootstrap form",
                 "template"
-            ]
+            ],
+            "time": "1352191925"
         },
         {
             "name": "mopa/composer-bridge",
@@ -786,7 +786,6 @@
             "require": {
                 "symfony/console": "2.*"
             },
-            "time": "1349980189",
             "type": "symfony-bridge",
             "installation-source": "source",
             "autoload": {
@@ -813,7 +812,8 @@
             "keywords": [
                 "Symfony2",
                 "composer"
-            ]
+            ],
+            "time": "1349980189"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -990,7 +990,6 @@
             "suggest": {
                 "symfony/twig-bundle": ">=2.1.0,<2.3-dev"
             },
-            "time": "1352285268",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1019,7 +1018,8 @@
                 "assets",
                 "compression",
                 "minification"
-            ]
+            ],
+            "time": "1352285268"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -1288,7 +1288,6 @@
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "1352287355",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1318,7 +1317,8 @@
             "homepage": "http://twig.sensiolabs.org",
             "keywords": [
                 "templating"
-            ]
+            ],
+            "time": "1352287355"
         }
     ],
     "packages-dev": [
@@ -1470,7 +1470,6 @@
                 "behat/mink-selenium2-driver": "to enable Selenium2 (webdriver support)",
                 "behat/mink-zombie-driver": "to enable Zombie.js support"
             },
-            "time": "1352164762",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1499,7 +1498,8 @@
                 "testing",
                 "browser",
                 "web"
-            ]
+            ],
+            "time": "1352164762"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -1568,7 +1568,6 @@
             "require-dev": {
                 "behat/mink-goutte-driver": "*"
             },
-            "time": "1352140856",
             "type": "behat-extension",
             "installation-source": "source",
             "autoload": {
@@ -1593,7 +1592,8 @@
                 "browser",
                 "web",
                 "gui"
-            ]
+            ],
+            "time": "1352140856"
         },
         {
             "name": "behat/symfony2-extension",
@@ -1792,6 +1792,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "doctrine/data-fixtures": 20,
         "mopa/bootstrap-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
         "knplabs/knp-menu-bundle": 20,

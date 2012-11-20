@@ -10,6 +10,7 @@
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.0.*",
         "doctrine/doctrine-fixtures-bundle": "*",
+        "doctrine/data-fixtures": "dev-master#98e059213cd8bf70f1203a3c9acc3c7e8afc2c89",
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "2.1.*",
         "symfony/swiftmailer-bundle": "2.1.*",
