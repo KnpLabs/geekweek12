@@ -1,5 +1,5 @@
 {
-    "hash": "8b26580a7746985a38723d746d78e19b",
+    "hash": "1409572634973b8296bbb5a048e28743",
     "packages": [
         {
             "name": "doctrine/common",
@@ -1792,7 +1792,6 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "doctrine/data-fixtures": 20,
         "mopa/bootstrap-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
         "knplabs/knp-menu-bundle": 20,
