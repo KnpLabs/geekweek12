@@ -38,15 +38,15 @@ class RegisterFormTypesCompilerPass extends ObjectBehavior
     function it_should_add_tagged_service_for_each_form_type($container, $classFinder, $definitionFactory, $cheeseTypeDef, $editCheeseTypeDef, $mouseTypeDef)
     {
         $container->hasDefinition('app_form_cheese_type')->willReturn(false);
-        $definitionFactory->create('App\Form\CheeseType')->shouldBeCalled()->willReturn($cheeseTypeDef);
+        $definitionFactory->createDefinition('App\Form\CheeseType')->shouldBeCalled()->willReturn($cheeseTypeDef);
         $container->setDefinition('app_form_cheese_type', $cheeseTypeDef)->shouldBeCalled();
 
         $container->hasDefinition('app_form_edit_cheese_type')->willReturn(false);
-        $definitionFactory->create('App\Form\EditCheeseType')->willReturn($editCheeseTypeDef);
+        $definitionFactory->createDefinition('App\Form\EditCheeseType')->willReturn($editCheeseTypeDef);
         $container->setDefinition('app_form_edit_cheese_type', $editCheeseTypeDef)->shouldBeCalled();
 
         $container->hasDefinition('app_form_mouse_type')->willReturn(false);
-        $definitionFactory->create('App\Form\MouseType')->willReturn($mouseTypeDef);
+        $definitionFactory->createDefinition('App\Form\MouseType')->willReturn($mouseTypeDef);
         $container->setDefinition('app_form_mouse_type', $mouseTypeDef)->shouldBeCalled();
 
         $this->process($container);
@@ -60,7 +60,7 @@ class RegisterFormTypesCompilerPass extends ObjectBehavior
     function it_should_not_add_service_with_same_id_and_tag_alias($container, $classFinder, $definitionFactory, $cheeseTypeDef, $editCheeseTypeDef, $mouseTypeDef)
     {
         $container->hasDefinition('app_form_cheese_type')->willReturn(false);
-        $definitionFactory->create('App\Form\CheeseType')->shouldBeCalled()->willReturn($cheeseTypeDef);
+        $definitionFactory->createDefinition('App\Form\CheeseType')->shouldBeCalled()->willReturn($cheeseTypeDef);
         $container->setDefinition('app_form_cheese_type', $cheeseTypeDef)->shouldBeCalled();
 
         $container->hasDefinition('app_form_edit_cheese_type')->willReturn(true);
