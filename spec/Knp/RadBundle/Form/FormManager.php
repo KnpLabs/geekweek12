@@ -17,14 +17,19 @@ class FormManager extends ObjectBehavior
     {
         $this->beConstructedWith($request);
 
-        $this->registerCreator($creator1);
-        $this->registerCreator($creator2);
-        $this->registerCreator($creator3);
+        $this->registerCreator($creator1, 2);
+        $this->registerCreator($creator2, 3);
+        $this->registerCreator($creator3, 1);
     }
 
-    function it_should_be_able_to_register_creators($creator1, $creator2)
+    function it_should_be_able_to_register_creators()
     {
         $this->getCreators()->shouldHaveCount(3);
+    }
+
+    function it_should_be_able_to_register_creators_orderly($creator1, $creator2, $creator3)
+    {
+        $this->getCreators()->shouldReturn([3 => $creator2, 2 => $creator1, 1 => $creator3]);
     }
 
     /**
@@ -32,8 +37,8 @@ class FormManager extends ObjectBehavior
      */
     function it_should_try_to_create_form_with_registered_creators($object, $creator1, $creator2)
     {
-        $creator1->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
-        $creator2->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
+        $creator2->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator1->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
 
         $this->createObjectForm($object, 'edit');
     }
@@ -55,8 +60,8 @@ class FormManager extends ObjectBehavior
      */
     function it_should_return_first_non_null_result_from_creator($object, $creator1, $creator2, $creator3)
     {
-        $creator1->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
-        $creator2->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
+        $creator2->create($object, 'edit', array())->willReturn(null)->shouldBeCalled();
+        $creator1->create($object, 'edit', array())->willReturn(true)->shouldBeCalled();
         $creator3->create($object, 'edit', array())->shouldNotBeCalled();
 
         $this->createObjectForm($object, 'edit');
@@ -66,10 +71,10 @@ class FormManager extends ObjectBehavior
      * @param stdClass $object
      * @param Symfony\Component\Form\Form $form
      */
-    function it_should_be_able_to_bind_unsafe_requests($object, $request, $form, $creator1)
+    function it_should_be_able_to_bind_unsafe_requests($object, $request, $form, $creator2)
     {
         $request->isMethodSafe()->willReturn(false);
-        $creator1->create($object, null, array())->willReturn($form)->shouldBeCalled();
+        $creator2->create($object, null, array())->willReturn($form)->shouldBeCalled();
         $form->bind($request)->shouldBeCalled();
 
         $this->createBoundObjectForm($object);
@@ -79,10 +84,10 @@ class FormManager extends ObjectBehavior
      * @param stdClass $object
      * @param Symfony\Component\Form\Form $form
      */
-    function it_should_not_bind_get_safe_requests($object, $request, $form, $creator1)
+    function it_should_not_bind_get_safe_requests($object, $request, $form, $creator2)
     {
         $request->isMethodSafe()->willReturn(true);
-        $creator1->create($object, null, array())->willReturn($form)->shouldBeCalled();
+        $creator2->create($object, null, array())->willReturn($form)->shouldBeCalled();
         $form->bind($request)->shouldNotBeCalled();
 
         $this->createBoundObjectForm($object);
