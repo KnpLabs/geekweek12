@@ -33,6 +33,9 @@ class RegisterDoctrineRepositoriesPass extends ObjectBehavior
 
         $classFinder->findClassesMatching('/my/project/src/App/Entity', 'App\Entity', '(?<!Repository)$')->shouldBeCalled()->willReturn(array('App\Entity\Cheese', 'App\Entity\Customer'));
 
+        $container->hasDefinition('orm.cheese_repository')->willReturn(false)->shouldBeCalled();
+        $container->hasDefinition('orm.customer_repository')->willReturn(false)->shouldBeCalled();
+
         $definitionFactory->createDefinition('App\Entity\Cheese')->shouldBeCalled()->willReturn($cheeseDef);
         $definitionFactory->createDefinition('App\Entity\Customer')->shouldBeCalled()->willReturn($customerDef);
 
@@ -43,6 +46,28 @@ class RegisterDoctrineRepositoriesPass extends ObjectBehavior
     }
 
     /**
+     * @param Symfony\Component\DependencyInjection\Definition $cheeseDef
+     * @param Symfony\Component\DependencyInjection\Definition $customerDef
+     */
+    function it_should_not_register_a_repository_service_if_already_defined($container, $bundle, $classFinder, $definitionFactory, $cheeseDef, $customerDef)
+    {
+        $bundle->getPath()->shouldBeCalled()->willReturn('/my/project/src/App');
+        $bundle->getNamespace()->shouldBeCalled()->willReturn('App');
+
+        $classFinder->findClassesMatching('/my/project/src/App/Entity', 'App\Entity', '(?<!Repository)$')->shouldBeCalled()->willReturn(array('App\Entity\Cheese', 'App\Entity\Customer'));
+
+        $container->hasDefinition('orm.cheese_repository')->willReturn(true)->shouldBeCalled();
+        $container->hasDefinition('orm.customer_repository')->willReturn(false)->shouldBeCalled();
+
+        $definitionFactory->createDefinition('App\Entity\Cheese')->shouldNotBeCalled();
+        $definitionFactory->createDefinition('App\Entity\Customer')->shouldBeCalled()->willReturn($customerDef);
+
+        $container->setDefinition('orm.cheese_repository', $cheeseDef)->shouldNotBeCalled();
+        $container->setDefinition('orm.customer_repository', $customerDef)->shouldBeCalled();
+
+        $this->process($container);
+    }
+    /**
      * @param Symfony\Component\DependencyInjection\Definition $definition
      */
     function it_should_underscore_camelcased_names($container, $bundle, $classFinder, $definitionFactory, $definition)
@@ -51,6 +76,7 @@ class RegisterDoctrineRepositoriesPass extends ObjectBehavior
         $bundle->getNamespace()->shouldBeCalled()->willReturn('App');
 
         $classFinder->findClassesMatching('/my/project/src/App/Entity', 'App\Entity', '(?<!Repository)$')->shouldBeCalled()->willReturn(array('App\Entity\CheesePicture'));
+        $container->hasDefinition('orm.cheese_picture_repository')->willReturn(false)->shouldBeCalled();
 
         $definitionFactory->createDefinition('App\Entity\CheesePicture')->shouldBeCalled()->willReturn($definition);
 
@@ -68,6 +94,7 @@ class RegisterDoctrineRepositoriesPass extends ObjectBehavior
         $bundle->getNamespace()->shouldBeCalled()->willReturn('App');
 
         $classFinder->findClassesMatching('/my/project/src/App/Entity', 'App\Entity', '(?<!Repository)$')->shouldBeCalled()->willReturn(array('App\Entity\Cheese\Picture'));
+        $container->hasDefinition('orm.cheese.picture_repository')->willReturn(false)->shouldBeCalled();
 
         $definitionFactory->createDefinition('App\Entity\Cheese\Picture')->shouldBeCalled()->willReturn($definition);
 

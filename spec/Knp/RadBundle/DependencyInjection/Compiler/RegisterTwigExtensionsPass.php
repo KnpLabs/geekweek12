@@ -44,6 +44,9 @@ class RegisterTwigExtensionsPass extends ObjectBehavior
             'App\Twig\WineExtension'
         ));
 
+        $container->hasDefinition('app.twig.bread_extension')->willReturn(false)->shouldBeCalled();
+        $container->hasDefinition('app.twig.wine_extension')->willReturn(false)->shouldBeCalled();
+
         $definitionFactory->createDefinition('App\Twig\BreadExtension')->shouldBeCalled()->willReturn($breadDef);
         $definitionFactory->createDefinition('App\Twig\WineExtension')->shouldBeCalled()->willReturn($wineDef);
 
@@ -57,6 +60,43 @@ class RegisterTwigExtensionsPass extends ObjectBehavior
         $referenceFactory->createReference('app.twig.wine_extension')->shouldBeCalled()->willReturn($wineRef);
 
         $twigDef->addMethodCall('addExtension', array($breadRef->getWrappedSubject()))->shouldBeCalled();
+        $twigDef->addMethodCall('addExtension', array($wineRef->getWrappedSubject()))->shouldBeCalled();
+
+        $this->process($container);
+    }
+
+    /**
+     * @param Symfony\Component\DependencyInjection\Definition $breadDef
+     * @param Symfony\Component\DependencyInjection\Definition $wineDef
+     * @param Symfony\Component\DependencyInjection\Reference $breadRef
+     * @param Symfony\Component\DependencyInjection\Reference $wineRef
+     */
+    function it_should_not_register_already_defined_services($bundle, $container, $classFinder, $definitionFactory, $referenceFactory, $serviceIdGenerator, $twigDef, $breadDef, $wineDef, $breadRef, $wineRef)
+    {
+        $container->hasDefinition('twig')->willReturn(true);
+        $container->getDefinition('twig')->willReturn($twigDef);
+
+        $classFinder->findClassesMatching('/my/project/src/App/Twig', 'App\Twig', 'Extension$')->willReturn(array(
+            'App\Twig\BreadExtension',
+            'App\Twig\WineExtension'
+        ));
+
+        $container->hasDefinition('app.twig.bread_extension')->willReturn(true)->shouldBeCalled();
+        $container->hasDefinition('app.twig.wine_extension')->willReturn(false)->shouldBeCalled();
+
+        $definitionFactory->createDefinition('App\Twig\BreadExtension')->shouldNotBeCalled();
+        $definitionFactory->createDefinition('App\Twig\WineExtension')->shouldBeCalled()->willReturn($wineDef);
+
+        $serviceIdGenerator->generateForBundleClass($bundle, 'App\Twig\BreadExtension')->shouldBeCalled()->willReturn('app.twig.bread_extension');
+        $serviceIdGenerator->generateForBundleClass($bundle, 'App\Twig\WineExtension')->shouldBeCalled()->willReturn('app.twig.wine_extension');
+
+        $container->setDefinition('app.twig.bread_extension', $breadDef)->shouldNotBeCalled();
+        $container->setDefinition('app.twig.wine_extension', $wineDef)->shouldBeCalled();
+
+        $referenceFactory->createReference('app.twig.bread_extension')->shouldNotBeCalled();
+        $referenceFactory->createReference('app.twig.wine_extension')->shouldBeCalled()->willReturn($wineRef);
+
+        $twigDef->addMethodCall('addExtension', array($breadRef->getWrappedSubject()))->shouldNotBeCalled();
         $twigDef->addMethodCall('addExtension', array($wineRef->getWrappedSubject()))->shouldBeCalled();
 
         $this->process($container);
