@@ -106,4 +106,22 @@ class ViewListener extends ObjectBehavior
 
         $this->onKernelView($event);
     }
+
+    function it_should_deduce_view_with_correct_bundle_name($request, $response, $reqManip, $engine, $event, $cnp, $mvh)
+    {
+        $this->setAppBundleName('TestBundle');
+
+        $reqManip->hasAttribute($request, '_controller')->willReturn(true);
+        $reqManip->getAttribute($request, '_controller')->willReturn('App\Controller\CheeseController::eatAction');
+
+        $request->getRequestFormat()->willReturn('html');
+
+        $event->getControllerResult()->willReturn(array('foo' => 'bar'));
+
+        $engine->exists('TestBundle:Cheese:eat.html.twig')->willReturn(false);
+
+        $mvh->handleMissingView($event, 'TestBundle:Cheese:eat.html.twig', array('foo' => 'bar'))->shouldBeCalled();
+
+        $this->onKernelView($event);
+    }
 }
