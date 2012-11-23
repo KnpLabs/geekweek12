@@ -4,11 +4,13 @@ namespace Knp\RadBundle\DependencyInjection\Definition;
 
 use Symfony\Component\DependencyInjection\Definition;
 
-class SecurityVoterFactory extends AbstractContainerAwareFactory
+class FormTypeDefinitionFactory extends AbstractContainerAwareFactory
 {
     public function createDefinition($className)
     {
         $definition = new Definition($className);
+        $definition->addTag('form.type');
+        $definition->setPublic(true);
 
         $this->injectContainer($definition);
 
